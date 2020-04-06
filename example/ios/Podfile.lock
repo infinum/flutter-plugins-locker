@@ -1,0 +1,29 @@
+PODS:
+  - Flutter (1.0.0)
+  - flutter_locker (0.0.1):
+    - Flutter
+    - Locker
+  - Locker (2.2.0)
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - flutter_locker (from `.symlinks/plugins/flutter_locker/ios`)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Locker
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  flutter_locker:
+    :path: ".symlinks/plugins/flutter_locker/ios"
+
+SPEC CHECKSUMS:
+  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  flutter_locker: 2aab654ad51acf9aef1ec47709da41052710586f
+  Locker: d3ad3cfcc09af4ae7e64023c4ad28bbd597ee11a
+
+PODFILE CHECKSUM: 2609452b760cd11039b14039a86564367a3d8ab9
+
+COCOAPODS: 1.7.2
