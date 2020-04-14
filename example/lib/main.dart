@@ -60,6 +60,14 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
+  Future<void> _deleteSecret(BuildContext context) async {
+    FlutterLocker.delete(key).then((value) {
+      Scaffold.of(context).showSnackBar(SnackBar(content: Text('Deleted secret: ')));
+    }).catchError((err) {
+      Scaffold.of(context).showSnackBar(SnackBar(content: Text('Error happened: ' + err.toString())));
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -80,6 +88,10 @@ class _MyAppState extends State<MyApp> {
               SizedBox(height: 20),
               CupertinoButton.filled(child: Text("Retrieve"), onPressed: () {
                 _retrieveSecret(context);
+              }),
+              SizedBox(height: 20),
+              CupertinoButton.filled(child: Text("Delete"), onPressed: () {
+                _deleteSecret(context);
               })
             ],
           ),

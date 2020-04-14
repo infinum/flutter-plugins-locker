@@ -6,6 +6,7 @@ enum Method {
     case canAuthenticate
     case save
     case retrieve
+    case delete
     case unrecognized
     
     init?(name: String) {
@@ -13,6 +14,7 @@ enum Method {
         case "canAuthenticate": self = .canAuthenticate
         case "saveSecret": self = .save
         case "retrieveSecret": self = .retrieve
+        case "deleteSecret": self = .delete
         default: self = .unrecognized
         }
     }
@@ -39,6 +41,7 @@ public class SwiftFlutterLockerPlugin: NSObject, FlutterPlugin {
         case .canAuthenticate: canAuthenticate(result: result)
         case .save: save(key: args![0], secret: args![1], result: result)
         case .retrieve: retrieve(key: args![0], title: args![1], result: result)
+        case .delete: delete(key: args![0], result: result)
         default: result(FlutterMethodNotImplemented)
         }
     }
@@ -71,6 +74,11 @@ public class SwiftFlutterLockerPlugin: NSObject, FlutterPlugin {
             failure: { (failureStatus) in
                 result(FlutterError(code: "ERROR", message: "Locker.retrieve error " + failureStatus.description, details: nil))
             })
+    }
+    
+    private func delete(key: String, result: @escaping FlutterResult) {
+        Locker.deleteSecret(for: key)
+        result(true);
     }
 
 }

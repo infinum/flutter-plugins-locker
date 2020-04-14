@@ -19,4 +19,8 @@ class FlutterLocker {
     final String secret = await _channel.invokeMethod('retrieveSecret', [key, promptTitle, androidPromptCancel]);
     return secret;
   }
+
+  static Future<void> delete(String key) async {
+    await _channel.invokeMethod('deleteSecret', [key]);
+  }
 }

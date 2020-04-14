@@ -43,6 +43,7 @@ public class FlutterLockerPlugin : FlutterPlugin, MethodCallHandler, ActivityAwa
             "canAuthenticate" -> canAuthenticate(result)
             "saveSecret" -> saveSecret(args!![0], args[1], args[2], args[3], result)
             "retrieveSecret" -> retrieveSecret(args!![0], args[1], args[2], result)
+            "deleteSecret" -> deleteSecret(args!![0], result)
             else -> result.notImplemented()
         }
     }
@@ -96,6 +97,11 @@ public class FlutterLockerPlugin : FlutterPlugin, MethodCallHandler, ActivityAwa
         } ?: kotlin.run {
             result.error("Error", "Secret not found for that key", null)
         }
+    }
+    
+    private fun deleteSecret(key: String, result: Result) {
+        activity.getPreferences(Context.MODE_PRIVATE).edit().remove(key).apply();
+        result.success(true);
     }
 
     override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
