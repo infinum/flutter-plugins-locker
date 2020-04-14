@@ -13,11 +13,12 @@ It uses:
 As you when saving on Android, OS will show prompt and you also need to pass prompt title and cancel.
 - `FlutterLocker.retrieve(key, title, androidCancelTitle`)
 This title is used in both iOS and Android prompt.
+- `FlutterLocker.delete(key)`
  
  
 Note:
- - iOS simulator will not show authentication dialog (authentication will always succeed)
- - (when encrypting iOS doesn't show dialog?)
+ - iOS only: app will not show authentication dialog when saving (authentication will always succeed)
+ - iOS only: you can't override password with new one. You need the use `delete` first.
  - please follow **Locker's** and **Goldfinger's** setup to prevent any issues.
 
 iOS:
