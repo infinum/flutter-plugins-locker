@@ -1,0 +1,41 @@
+// protoc --dart_out=./lib/gen/ protos/flutter_locker.proto
+
+syntax = "proto3";
+
+option java_package = "com.example.flutter_locker";
+
+enum ProtoMethodInterface {
+    canAuthenticate = 0;
+    saveSecret = 1;
+    retrieveSecret = 2;
+    deleteSecret = 3;
+}
+
+message ProtoAndroidPrompt {
+    string titleText = 1;
+    string cancelText = 2;
+    string description = 3;
+}
+
+message ProtoIOsPrompt {
+    string touchIdText = 1;
+}
+
+message ProtoSaveRequest {
+    string key = 1;
+    string secret = 2;
+    ProtoAndroidPrompt androidPrompt = 3;
+}
+
+message ProtoRetrieveRequest {
+    string key = 1;
+    string secret = 2;
+    ProtoAndroidPrompt androidPrompt = 3;
+    ProtoIOsPrompt iOsPrompt = 4;
+}
+
+message ProtoDeleteRequest {
+    string key = 1;
+}
+
+

@@ -2,29 +2,8 @@ import Flutter
 import UIKit
 import Locker
 
-enum Method {
-    case canAuthenticate
-    case save
-    case retrieve
-    case delete
-    case unrecognized
-    
-    init?(name: String) {
-        switch name {
-        case "canAuthenticate": self = .canAuthenticate
-        case "saveSecret": self = .save
-        case "retrieveSecret": self = .retrieve
-        case "deleteSecret": self = .delete
-        default: self = .unrecognized
-        }
-    }
-}
-
 // TODO:
 // - better error handling
-// - Method enum can be improved
-// - Flutter calls and deconstructing can be improved with Proto Buffers
-// - force unwrapping can be improved as well
 
 public class SwiftFlutterLockerPlugin: NSObject, FlutterPlugin {
     public static func register(with registrar: FlutterPluginRegistrar) {
@@ -34,15 +13,16 @@ public class SwiftFlutterLockerPlugin: NSObject, FlutterPlugin {
     }
     
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-        let method = Method(name: call.method)
-        let args = (call.arguments as? [String]);
+        guard let rawMethod = Int(call.method), let method = ProtoMethodInterface(rawValue: rawMethod) else {
+            return result(FlutterMethodNotImplemented)
+        }
         
         switch method {
         case .canAuthenticate: canAuthenticate(result: result)
-        case .save: save(key: args![0], secret: args![1], result: result)
-        case .retrieve: retrieve(key: args![0], title: args![1], result: result)
-        case .delete: delete(key: args![0], result: result)
-        default: result(FlutterMethodNotImplemented)
+        case .saveSecret: save(call: call, result: result)
+        case .retrieveSecret: retrieve(call: call, result: result)
+        case .deleteSecret: delete(call: call, result: result)
+        case .UNRECOGNIZED(_): result(FlutterMethodNotImplemented)
         }
     }
     
@@ -51,19 +31,28 @@ public class SwiftFlutterLockerPlugin: NSObject, FlutterPlugin {
         result(supportedBiometrics != BiometricsType.none)
     }
     
-    private func save(key: String, secret: String, result: @escaping FlutterResult) {
-        // This could theoretically fail but we never managed to break it ... If somehow set secret fails, it will be logged to console.
-        Locker.setSecret(secret, for: key)
+    private func save(call: FlutterMethodCall, result: @escaping FlutterResult) {
+        guard let data = call.arguments as? FlutterStandardTypedData, let saveRequest = try? ProtoSaveRequest(serializedData: data.data) else {
+             result(FlutterMethodNotImplemented)
+             return
+         }
+        
+        Locker.setSecret(saveRequest.secret, for: saveRequest.key)
         // This can never fail.
-        Locker.setShouldUseAuthenticationWithBiometrics(true, for: key)
+        Locker.setShouldUseAuthenticationWithBiometrics(true, for: saveRequest.key)
         // Considering all of the above, we are always returning true.
         result(true)
     }
 
-    private func retrieve(key: String, title: String, result: @escaping FlutterResult) {
+    private func retrieve(call: FlutterMethodCall, result: @escaping FlutterResult) {
+        guard let data = call.arguments as? FlutterStandardTypedData, let retrieveRequest = try? ProtoRetrieveRequest(serializedData: data.data) else {
+             result(FlutterMethodNotImplemented)
+             return
+         }
+        
         Locker.retrieveCurrentSecret(
-            for: key,
-            operationPrompt: title,
+            for: retrieveRequest.key,
+            operationPrompt: retrieveRequest.iOsPrompt.touchIDText,
             success: { (secret) in
                 guard let secret = secret else {
                     result(FlutterError(code: "ERROR", message: "Locker.retrieve error, unable to parse keychain data to string.", details: nil))
@@ -76,8 +65,13 @@ public class SwiftFlutterLockerPlugin: NSObject, FlutterPlugin {
             })
     }
     
-    private func delete(key: String, result: @escaping FlutterResult) {
-        Locker.deleteSecret(for: key)
+    private func delete(call: FlutterMethodCall, result: @escaping FlutterResult) {
+        guard let data = call.arguments as? FlutterStandardTypedData, let deleteRequest = try? ProtoDeleteRequest(serializedData: data.data) else {
+             result(FlutterMethodNotImplemented)
+             return
+         }
+        
+        Locker.deleteSecret(for: deleteRequest.key)
         result(true);
     }
 
