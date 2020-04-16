@@ -2,9 +2,7 @@ package com.example.flutter_locker
 
 import android.app.Activity
 import android.content.Context
-import android.content.SharedPreferences
-import android.util.Log
-import androidx.annotation.NonNull;
+import androidx.annotation.NonNull
 import androidx.fragment.app.FragmentActivity
 import co.infinum.goldfinger.Goldfinger
 import io.flutter.embedding.engine.plugins.FlutterPlugin
@@ -14,7 +12,6 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
-import io.flutter.plugin.common.PluginRegistry.Registrar
 import java.lang.Exception
 
 /** FlutterLockerPlugin */
@@ -32,61 +29,66 @@ public class FlutterLockerPlugin : FlutterPlugin, MethodCallHandler, ActivityAwa
             flutterPluginBinding.getFlutterEngine().getDartExecutor(),
             "flutter_locker"
         )
-        channel.setMethodCallHandler(this);
-        goldfinger = Goldfinger.Builder(context).build();
+        channel.setMethodCallHandler(this)
+        goldfinger = Goldfinger.Builder(context).build()
     }
 
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
-        val args = call.arguments as? List<String>
-
         when (call.method) {
-            "canAuthenticate" -> canAuthenticate(result)
-            "saveSecret" -> saveSecret(args!![0], args[1], args[2], args[3], result)
-            "retrieveSecret" -> retrieveSecret(args!![0], args[1], args[2], result)
-            "deleteSecret" -> deleteSecret(args!![0], result)
+            FlutterLocker.ProtoMethodInterface.canAuthenticate.number.toString() -> canAuthenticate(result)
+            FlutterLocker.ProtoMethodInterface.saveSecret.number.toString() -> saveSecret(call, result)
+            FlutterLocker.ProtoMethodInterface.retrieveSecret.number.toString() -> retrieveSecret(call, result)
+            FlutterLocker.ProtoMethodInterface.deleteSecret.number.toString() -> deleteSecret(call, result)
             else -> result.notImplemented()
         }
     }
 
     private fun canAuthenticate(result: Result) {
-        result.success(goldfinger.canAuthenticate());
+        result.success(goldfinger.canAuthenticate())
     }
 
-    private fun saveSecret(key: String, value: String, title: String, cancel: String, result: Result) {
+    private fun saveSecret(call: MethodCall, result: Result) {
+        val request = FlutterLocker.ProtoSaveRequest.parseFrom(call.arguments as ByteArray)
+
         val prompt = Goldfinger.PromptParams.Builder(activity as FragmentActivity)
-            .title(title)
-            .negativeButtonText(cancel)
-            .build();
-        goldfinger.encrypt(prompt, key, value, object : Goldfinger.Callback {
+            .title(request.androidPrompt.titleText)
+            .description(request.androidPrompt.description)
+            .negativeButtonText(request.androidPrompt.cancelText)
+            .build()
+
+        goldfinger.encrypt(prompt, request.key, request.secret, object : Goldfinger.Callback {
             override fun onResult(goldfingerResult: Goldfinger.Result) {
                 if (goldfingerResult.type() == Goldfinger.Type.SUCCESS) {
                     activity.getPreferences(Context.MODE_PRIVATE).edit()
-                        .putString(key, goldfingerResult.value()).apply()
-                    result.success(true);
+                        .putString(request.key.toPrefsKey(), goldfingerResult.value()).apply()
+                    result.success(true)
                 } else if (goldfingerResult.type() == Goldfinger.Type.SUCCESS) {
-                    result.success(false);
+                    result.success(false)
                 }
             }
 
             override fun onError(e: Exception) {
-                result.error("Error", e.toString(), null);
+                result.error("Error", e.toString(), null)
             }
         })
     }
 
-    private fun retrieveSecret(key: String, title: String, cancel: String, result: Result) {
-        val prompt = Goldfinger.PromptParams.Builder(activity as FragmentActivity)
-            .title(title)
-            .negativeButtonText(cancel)
-            .build();
+    private fun retrieveSecret(call: MethodCall, result: Result) {
+        val request = FlutterLocker.ProtoRetrieveRequest.parseFrom(call.arguments as ByteArray)
 
-        val encryptedSecret = activity.getPreferences(Context.MODE_PRIVATE).getString(key, null);
+        val prompt = Goldfinger.PromptParams.Builder(activity as FragmentActivity)
+            .title(request.androidPrompt.titleText)
+            .description(request.androidPrompt.description)
+            .negativeButtonText(request.androidPrompt.cancelText)
+            .build()
+
+        val encryptedSecret = activity.getPreferences(Context.MODE_PRIVATE).getString(request.key.toPrefsKey(), null)
 
         encryptedSecret?.let {
-            goldfinger.decrypt(prompt, key, it, object : Goldfinger.Callback {
+            goldfinger.decrypt(prompt, request.key, it, object : Goldfinger.Callback {
                 override fun onResult(goldfingerResult: Goldfinger.Result) {
                     if (goldfingerResult.type() == Goldfinger.Type.SUCCESS) {
-                        result.success(goldfingerResult.value());
+                        result.success(goldfingerResult.value())
                     }
                 }
 
@@ -98,10 +100,11 @@ public class FlutterLockerPlugin : FlutterPlugin, MethodCallHandler, ActivityAwa
             result.error("Error", "Secret not found for that key", null)
         }
     }
-    
-    private fun deleteSecret(key: String, result: Result) {
-        activity.getPreferences(Context.MODE_PRIVATE).edit().remove(key).apply();
-        result.success(true);
+
+    private fun deleteSecret(call: MethodCall, result: Result) {
+        val request = FlutterLocker.ProtoDeleteRequest.parseFrom(call.arguments as ByteArray)
+        activity.getPreferences(Context.MODE_PRIVATE).edit().remove(request.key.toPrefsKey()).apply()
+        result.success(true)
     }
 
     override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
@@ -125,4 +128,7 @@ public class FlutterLockerPlugin : FlutterPlugin, MethodCallHandler, ActivityAwa
         // no-op
     }
     //endregion
+
+    // When saving to prefs we add this prefix to avoid any possible clash with other keys
+    fun String.toPrefsKey(): String = "\$_flutter_locker_$this"
 }

@@ -149,9 +149,8 @@ class ProtoSaveRequest extends $pb.GeneratedMessage {
 class ProtoRetrieveRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo('ProtoRetrieveRequest', createEmptyInstance: create)
     ..aOS(1, 'key')
-    ..aOS(2, 'secret')
-    ..aOM<ProtoAndroidPrompt>(3, 'androidPrompt', protoName: 'androidPrompt', subBuilder: ProtoAndroidPrompt.create)
-    ..aOM<ProtoIOsPrompt>(4, 'iOsPrompt', protoName: 'iOsPrompt', subBuilder: ProtoIOsPrompt.create)
+    ..aOM<ProtoAndroidPrompt>(2, 'androidPrompt', protoName: 'androidPrompt', subBuilder: ProtoAndroidPrompt.create)
+    ..aOM<ProtoIOsPrompt>(3, 'iOsPrompt', protoName: 'iOsPrompt', subBuilder: ProtoIOsPrompt.create)
     ..hasRequiredFields = false
   ;
 
@@ -180,35 +179,26 @@ class ProtoRetrieveRequest extends $pb.GeneratedMessage {
   void clearKey() => clearField(1);
 
   @$pb.TagNumber(2)
-  $core.String get secret => $_getSZ(1);
+  ProtoAndroidPrompt get androidPrompt => $_getN(1);
   @$pb.TagNumber(2)
-  set secret($core.String v) { $_setString(1, v); }
+  set androidPrompt(ProtoAndroidPrompt v) { setField(2, v); }
   @$pb.TagNumber(2)
-  $core.bool hasSecret() => $_has(1);
+  $core.bool hasAndroidPrompt() => $_has(1);
   @$pb.TagNumber(2)
-  void clearSecret() => clearField(2);
+  void clearAndroidPrompt() => clearField(2);
+  @$pb.TagNumber(2)
+  ProtoAndroidPrompt ensureAndroidPrompt() => $_ensure(1);
 
   @$pb.TagNumber(3)
-  ProtoAndroidPrompt get androidPrompt => $_getN(2);
+  ProtoIOsPrompt get iOsPrompt => $_getN(2);
   @$pb.TagNumber(3)
-  set androidPrompt(ProtoAndroidPrompt v) { setField(3, v); }
+  set iOsPrompt(ProtoIOsPrompt v) { setField(3, v); }
   @$pb.TagNumber(3)
-  $core.bool hasAndroidPrompt() => $_has(2);
+  $core.bool hasIOsPrompt() => $_has(2);
   @$pb.TagNumber(3)
-  void clearAndroidPrompt() => clearField(3);
+  void clearIOsPrompt() => clearField(3);
   @$pb.TagNumber(3)
-  ProtoAndroidPrompt ensureAndroidPrompt() => $_ensure(2);
-
-  @$pb.TagNumber(4)
-  ProtoIOsPrompt get iOsPrompt => $_getN(3);
-  @$pb.TagNumber(4)
-  set iOsPrompt(ProtoIOsPrompt v) { setField(4, v); }
-  @$pb.TagNumber(4)
-  $core.bool hasIOsPrompt() => $_has(3);
-  @$pb.TagNumber(4)
-  void clearIOsPrompt() => clearField(4);
-  @$pb.TagNumber(4)
-  ProtoIOsPrompt ensureIOsPrompt() => $_ensure(3);
+  ProtoIOsPrompt ensureIOsPrompt() => $_ensure(2);
 }
 
 class ProtoDeleteRequest extends $pb.GeneratedMessage {

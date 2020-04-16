@@ -129,8 +129,6 @@ struct ProtoRetrieveRequest {
 
   var key: String = String()
 
-  var secret: String = String()
-
   var androidPrompt: ProtoAndroidPrompt {
     get {return _androidPrompt ?? ProtoAndroidPrompt()}
     set {_androidPrompt = newValue}
@@ -295,18 +293,16 @@ extension ProtoRetrieveRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
   static let protoMessageName: String = "ProtoRetrieveRequest"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "key"),
-    2: .same(proto: "secret"),
-    3: .same(proto: "androidPrompt"),
-    4: .same(proto: "iOsPrompt"),
+    2: .same(proto: "androidPrompt"),
+    3: .same(proto: "iOsPrompt"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       switch fieldNumber {
       case 1: try decoder.decodeSingularStringField(value: &self.key)
-      case 2: try decoder.decodeSingularStringField(value: &self.secret)
-      case 3: try decoder.decodeSingularMessageField(value: &self._androidPrompt)
-      case 4: try decoder.decodeSingularMessageField(value: &self._iOsPrompt)
+      case 2: try decoder.decodeSingularMessageField(value: &self._androidPrompt)
+      case 3: try decoder.decodeSingularMessageField(value: &self._iOsPrompt)
       default: break
       }
     }
@@ -316,21 +312,17 @@ extension ProtoRetrieveRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
     if !self.key.isEmpty {
       try visitor.visitSingularStringField(value: self.key, fieldNumber: 1)
     }
-    if !self.secret.isEmpty {
-      try visitor.visitSingularStringField(value: self.secret, fieldNumber: 2)
-    }
     if let v = self._androidPrompt {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
     }
     if let v = self._iOsPrompt {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: ProtoRetrieveRequest, rhs: ProtoRetrieveRequest) -> Bool {
     if lhs.key != rhs.key {return false}
-    if lhs.secret != rhs.secret {return false}
     if lhs._androidPrompt != rhs._androidPrompt {return false}
     if lhs._iOsPrompt != rhs._iOsPrompt {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}

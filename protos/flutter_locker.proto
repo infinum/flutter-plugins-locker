@@ -29,9 +29,8 @@ message ProtoSaveRequest {
 
 message ProtoRetrieveRequest {
     string key = 1;
-    string secret = 2;
-    ProtoAndroidPrompt androidPrompt = 3;
-    ProtoIOsPrompt iOsPrompt = 4;
+    ProtoAndroidPrompt androidPrompt = 2;
+    ProtoIOsPrompt iOsPrompt = 3;
 }
 
 message ProtoDeleteRequest {

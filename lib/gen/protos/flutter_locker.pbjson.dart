@@ -44,9 +44,8 @@ const ProtoRetrieveRequest$json = const {
   '1': 'ProtoRetrieveRequest',
   '2': const [
     const {'1': 'key', '3': 1, '4': 1, '5': 9, '10': 'key'},
-    const {'1': 'secret', '3': 2, '4': 1, '5': 9, '10': 'secret'},
-    const {'1': 'androidPrompt', '3': 3, '4': 1, '5': 11, '6': '.ProtoAndroidPrompt', '10': 'androidPrompt'},
-    const {'1': 'iOsPrompt', '3': 4, '4': 1, '5': 11, '6': '.ProtoIOsPrompt', '10': 'iOsPrompt'},
+    const {'1': 'androidPrompt', '3': 2, '4': 1, '5': 11, '6': '.ProtoAndroidPrompt', '10': 'androidPrompt'},
+    const {'1': 'iOsPrompt', '3': 3, '4': 1, '5': 11, '6': '.ProtoIOsPrompt', '10': 'iOsPrompt'},
   ],
 };
 
