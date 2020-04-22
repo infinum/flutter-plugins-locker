@@ -25,6 +25,9 @@ public class SwiftFlutterLockerPlugin: NSObject, FlutterPlugin {
         case .UNRECOGNIZED(_): result(FlutterMethodNotImplemented)
         }
     }
+}
+
+private extension SwiftFlutterLockerPlugin {
     
     private func canAuthenticate(result: @escaping FlutterResult) {
         let supportedBiometrics = Locker.configuredBiometricsAuthentication
@@ -38,9 +41,9 @@ public class SwiftFlutterLockerPlugin: NSObject, FlutterPlugin {
          }
         
         Locker.setSecret(saveRequest.secret, for: saveRequest.key)
-        // This can never fail.
+        
+        // This can never fail
         Locker.setShouldUseAuthenticationWithBiometrics(true, for: saveRequest.key)
-        // Considering all of the above, we are always returning true.
         result(nil)
     }
 
@@ -74,5 +77,4 @@ public class SwiftFlutterLockerPlugin: NSObject, FlutterPlugin {
         Locker.deleteSecret(for: deleteRequest.key)
         result(nil);
     }
-
 }
