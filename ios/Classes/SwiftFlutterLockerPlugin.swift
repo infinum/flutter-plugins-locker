@@ -41,7 +41,7 @@ public class SwiftFlutterLockerPlugin: NSObject, FlutterPlugin {
         // This can never fail.
         Locker.setShouldUseAuthenticationWithBiometrics(true, for: saveRequest.key)
         // Considering all of the above, we are always returning true.
-        result(true)
+        result(nil)
     }
 
     private func retrieve(call: FlutterMethodCall, result: @escaping FlutterResult) {
@@ -72,7 +72,7 @@ public class SwiftFlutterLockerPlugin: NSObject, FlutterPlugin {
          }
         
         Locker.deleteSecret(for: deleteRequest.key)
-        result(true);
+        result(nil);
     }
 
 }

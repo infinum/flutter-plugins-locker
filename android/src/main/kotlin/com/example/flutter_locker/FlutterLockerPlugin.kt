@@ -61,9 +61,10 @@ public class FlutterLockerPlugin : FlutterPlugin, MethodCallHandler, ActivityAwa
                 if (goldfingerResult.type() == Goldfinger.Type.SUCCESS) {
                     activity.getPreferences(Context.MODE_PRIVATE).edit()
                         .putString(request.key.toPrefsKey(), goldfingerResult.value()).apply()
-                    result.success(true)
-                } else if (goldfingerResult.type() == Goldfinger.Type.SUCCESS) {
-                    result.success(false)
+                    result.success(null)
+                } else if (goldfingerResult.type() == Goldfinger.Type.ERROR) {
+                    result.error("Error", "Failed to save secret: " +
+                        goldfingerResult.message(), null);
                 }
             }
 
@@ -89,6 +90,9 @@ public class FlutterLockerPlugin : FlutterPlugin, MethodCallHandler, ActivityAwa
                 override fun onResult(goldfingerResult: Goldfinger.Result) {
                     if (goldfingerResult.type() == Goldfinger.Type.SUCCESS) {
                         result.success(goldfingerResult.value())
+                    } else if (goldfingerResult.type() == Goldfinger.Type.ERROR) {
+                        result.error("Error", "Failed to retrieve secret: " +
+                            goldfingerResult.message(), null);
                     }
                 }
 
@@ -104,7 +108,7 @@ public class FlutterLockerPlugin : FlutterPlugin, MethodCallHandler, ActivityAwa
     private fun deleteSecret(call: MethodCall, result: Result) {
         val request = FlutterLocker.ProtoDeleteRequest.parseFrom(call.arguments as ByteArray)
         activity.getPreferences(Context.MODE_PRIVATE).edit().remove(request.key.toPrefsKey()).apply()
-        result.success(true)
+        result.success(null)
     }
 
     override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {

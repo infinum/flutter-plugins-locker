@@ -11,12 +11,11 @@ class FlutterLocker {
     return success;
   }
 
-  static Future<bool> save(SaveSecretRequest request) async {
-    final bool success = await _channel.invokeMethod(
+  static Future<void> save(SaveSecretRequest request) async {
+    await _channel.invokeMethod(
       protos.ProtoMethodInterface.saveSecret.value.toString(),
       request.toProto().writeToBuffer(),
     );
-    return success;
   }
 
   static Future<String> retrieve(RetrieveSecretRequest request) async {
