@@ -1,26 +1,14 @@
+
+library flutter_locker;
+
 import 'dart:async';
-
 import 'package:flutter/services.dart';
+import 'package:flutter_locker/gen/protos/flutter_locker.pbenum.dart';
 
-class FlutterLocker {
-  static const MethodChannel _channel = const MethodChannel('flutter_locker');
+import 'gen/protos/flutter_locker.pb.dart' as protos;
 
-  static Future<bool> canAuthenticate() async {
-    final bool success = await _channel.invokeMethod('canAuthenticate');
-    return success;
-  }
-
-  static Future<bool> save(String key, String secret, String androidPromptTitle, String androidPromptCancel) async {
-    final bool success = await _channel.invokeMethod('saveSecret', [key, secret, androidPromptTitle, androidPromptCancel]);
-    return success;
-  }
-
-  static Future<String> retrieve(String key, String promptTitle, String androidPromptCancel) async {
-    final String secret = await _channel.invokeMethod('retrieveSecret', [key, promptTitle, androidPromptCancel]);
-    return secret;
-  }
-
-  static Future<void> delete(String key) async {
-    await _channel.invokeMethod('deleteSecret', [key]);
-  }
-}
+part 'src/flutter_locker.dart';
+part 'src/android_prompt.dart';
+part 'src/save_secret_request.dart';
+part 'src/retrieve_secret_request.dart';
+part 'src/ios_prompt.dart';

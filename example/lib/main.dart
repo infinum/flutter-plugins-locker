@@ -4,6 +4,7 @@ import 'dart:async';
 
 import 'package:flutter/services.dart';
 import 'package:flutter_locker/flutter_locker.dart';
+import 'package:flutter_locker/gen/protos/flutter_locker.pb.dart';
 
 void main() {
   runApp(MaterialApp(home: Scaffold(body: MyApp())));
@@ -15,26 +16,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String key = 'pwdk';
-
-  @override
-  void initState() {
-    super.initState();
-    initPlatformState();
-  }
-
-  Future<void> initPlatformState() async {
-    // do stuff
-
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) return;
-
-    setState(() {
-      // set state
-    });
-  }
+  String key = 'pwdkey';
+  String secret = '1111';
 
   Future<void> _canAuthenticate(BuildContext context) async {
     FlutterLocker.canAuthenticate().then((value) {
@@ -45,16 +28,18 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> _saveSecret(BuildContext context) async {
-    FlutterLocker.save(key, "1111", "Authenticate", "Cancel").then((value) {
-        Scaffold.of(context).showSnackBar(SnackBar(content: Text('Successfully Saved!')));
+    FlutterLocker.save(SaveSecretRequest(key, secret, AndroidPrompt("Authenticate", "Cancel"))).then((value) {
+      Scaffold.of(context).showSnackBar(SnackBar(content: Text('Successfully Saved Secret: $secret')));
     }).catchError((err) {
       Scaffold.of(context).showSnackBar(SnackBar(content: Text('Error happened: ' + err.toString())));
     });
   }
 
   Future<void> _retrieveSecret(BuildContext context) async {
-    FlutterLocker.retrieve(key, "Authenticate to Login", "Cancel").then((value) {
-        Scaffold.of(context).showSnackBar(SnackBar(content: Text('Retrieved secret: ' + value)));
+    FlutterLocker.retrieve(
+            RetrieveSecretRequest(key, AndroidPrompt("Authenticate", "Cancel"), IOsPrompt("Authenticate")))
+        .then((value) {
+      Scaffold.of(context).showSnackBar(SnackBar(content: Text('Retrieved secret: ' + value)));
     }).catchError((err) {
       Scaffold.of(context).showSnackBar(SnackBar(content: Text('Error happened: ' + err.toString())));
     });
@@ -62,7 +47,7 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> _deleteSecret(BuildContext context) async {
     FlutterLocker.delete(key).then((value) {
-      Scaffold.of(context).showSnackBar(SnackBar(content: Text('Deleted secret: ')));
+      Scaffold.of(context).showSnackBar(SnackBar(content: Text('Secret deleted.')));
     }).catchError((err) {
       Scaffold.of(context).showSnackBar(SnackBar(content: Text('Error happened: ' + err.toString())));
     });
@@ -72,29 +57,37 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Column(
-            children: <Widget>[
-              SizedBox(height: 20),
-              Center(
-                child: Text('Goldilocks finger example'),
-              ),
-              SizedBox(height: 20),
-              CupertinoButton.filled(child: Text("Can authenticate"), onPressed: () {
+        children: <Widget>[
+          SizedBox(height: 20),
+          Center(
+            child: Text('Goldilocks finger example'),
+          ),
+          SizedBox(height: 20),
+          CupertinoButton.filled(
+              child: Text("Can authenticate"),
+              onPressed: () {
                 _canAuthenticate(context);
               }),
-              SizedBox(height: 20),
-              CupertinoButton.filled(child: Text("Save"), onPressed: () {
+          SizedBox(height: 20),
+          CupertinoButton.filled(
+              child: Text("Save"),
+              onPressed: () {
                 _saveSecret(context);
               }),
-              SizedBox(height: 20),
-              CupertinoButton.filled(child: Text("Retrieve"), onPressed: () {
+          SizedBox(height: 20),
+          CupertinoButton.filled(
+              child: Text("Retrieve"),
+              onPressed: () {
                 _retrieveSecret(context);
               }),
-              SizedBox(height: 20),
-              CupertinoButton.filled(child: Text("Delete"), onPressed: () {
+          SizedBox(height: 20),
+          CupertinoButton.filled(
+              child: Text("Delete"),
+              onPressed: () {
                 _deleteSecret(context);
               })
-            ],
-          ),
+        ],
+      ),
     );
   }
 }
