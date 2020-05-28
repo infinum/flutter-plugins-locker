@@ -1,4 +1,6 @@
+// https://pub.dev/packages/protoc_plugin
 // protoc --dart_out=./lib/gen/ protos/flutter_locker.proto
+// protoc --swift_out=./ios/Classes ./protos/flutter_locker.proto
 
 syntax = "proto3";
 
@@ -9,6 +11,13 @@ enum ProtoMethodInterface {
     saveSecret = 1;
     retrieveSecret = 2;
     deleteSecret = 3;
+}
+
+enum LockerError {
+    secretNotFound = 0;
+    authenticationCanceled = 1;
+    authenticationFailed = 2;
+    unknown = 3;
 }
 
 message ProtoAndroidPrompt {

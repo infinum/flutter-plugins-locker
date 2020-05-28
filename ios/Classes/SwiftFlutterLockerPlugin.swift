@@ -1,6 +1,7 @@
 import Flutter
 import UIKit
 import Locker
+import Security.SecBase
 
 // TODO:
 // - better error handling
@@ -64,7 +65,20 @@ private extension SwiftFlutterLockerPlugin {
                 result(secret)
             },
             failure: { (failureStatus) in
-                result(FlutterError(code: "ERROR", message: "Locker.retrieve error " + failureStatus.description, details: nil))
+                var code = LockerError.unknown
+                
+                switch failureStatus {
+                case errSecItemNotFound:
+                    code = LockerError.secretNotFound
+                case errSecAuthFailed:
+                    code = LockerError.authenticationFailed
+                case errSecUserCanceled:
+                    code = LockerError.authenticationCanceled
+                default:
+                    code = LockerError.unknown
+                }
+                
+                result(FlutterError(code: String(code.rawValue), message: "Security error: " + failureStatus.description, details: nil))
             })
     }
     
