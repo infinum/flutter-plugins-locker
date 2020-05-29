@@ -15,6 +15,16 @@ const ProtoMethodInterface$json = const {
   ],
 };
 
+const LockerError$json = const {
+  '1': 'LockerError',
+  '2': const [
+    const {'1': 'secretNotFound', '2': 0},
+    const {'1': 'authenticationCanceled', '2': 1},
+    const {'1': 'authenticationFailed', '2': 2},
+    const {'1': 'unknown', '2': 3},
+  ],
+};
+
 const ProtoAndroidPrompt$json = const {
   '1': 'ProtoAndroidPrompt',
   '2': const [

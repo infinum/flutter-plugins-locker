@@ -28,3 +28,22 @@ class ProtoMethodInterface extends $pb.ProtobufEnum {
   const ProtoMethodInterface._($core.int v, $core.String n) : super(v, n);
 }
 
+class LockerError extends $pb.ProtobufEnum {
+  static const LockerError secretNotFound = LockerError._(0, 'secretNotFound');
+  static const LockerError authenticationCanceled = LockerError._(1, 'authenticationCanceled');
+  static const LockerError authenticationFailed = LockerError._(2, 'authenticationFailed');
+  static const LockerError unknown = LockerError._(3, 'unknown');
+
+  static const $core.List<LockerError> values = <LockerError> [
+    secretNotFound,
+    authenticationCanceled,
+    authenticationFailed,
+    unknown,
+  ];
+
+  static final $core.Map<$core.int, LockerError> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static LockerError valueOf($core.int value) => _byValue[value];
+
+  const LockerError._($core.int v, $core.String n) : super(v, n);
+}
+

@@ -58,11 +58,11 @@ class _MyAppState extends State<MyApp> {
     return SafeArea(
       child: Column(
         children: <Widget>[
-          SizedBox(height: 20),
+          SizedBox(height: 100),
           Center(
-            child: Text('Goldilocks finger example'),
+            child: Text('Locker example', style: TextStyle(fontSize: 24),),
           ),
-          SizedBox(height: 20),
+          SizedBox(height: 40),
           CupertinoButton.filled(
               child: Text("Can authenticate"),
               onPressed: () {
@@ -70,19 +70,19 @@ class _MyAppState extends State<MyApp> {
               }),
           SizedBox(height: 20),
           CupertinoButton.filled(
-              child: Text("Save"),
+              child: Text("Save secret"),
               onPressed: () {
                 _saveSecret(context);
               }),
           SizedBox(height: 20),
           CupertinoButton.filled(
-              child: Text("Retrieve"),
+              child: Text("Retrieve secret"),
               onPressed: () {
                 _retrieveSecret(context);
               }),
           SizedBox(height: 20),
           CupertinoButton.filled(
-              child: Text("Delete"),
+              child: Text("Delete secret"),
               onPressed: () {
                 _deleteSecret(context);
               })

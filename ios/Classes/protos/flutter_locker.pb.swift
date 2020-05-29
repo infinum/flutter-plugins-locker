@@ -6,7 +6,9 @@
 // For information on using the generated types, please see the documentation:
 //   https://github.com/apple/swift-protobuf/
 
+// https://pub.dev/packages/protoc_plugin
 // protoc --dart_out=./lib/gen/ protos/flutter_locker.proto
+// protoc --swift_out=./ios/Classes ./protos/flutter_locker.proto
 
 import Foundation
 import SwiftProtobuf
@@ -64,6 +66,54 @@ extension ProtoMethodInterface: CaseIterable {
     .saveSecret,
     .retrieveSecret,
     .deleteSecret,
+  ]
+}
+
+#endif  // swift(>=4.2)
+
+enum LockerError: SwiftProtobuf.Enum {
+  typealias RawValue = Int
+  case secretNotFound // = 0
+  case authenticationCanceled // = 1
+  case authenticationFailed // = 2
+  case unknown // = 3
+  case UNRECOGNIZED(Int)
+
+  init() {
+    self = .secretNotFound
+  }
+
+  init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .secretNotFound
+    case 1: self = .authenticationCanceled
+    case 2: self = .authenticationFailed
+    case 3: self = .unknown
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  var rawValue: Int {
+    switch self {
+    case .secretNotFound: return 0
+    case .authenticationCanceled: return 1
+    case .authenticationFailed: return 2
+    case .unknown: return 3
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+}
+
+#if swift(>=4.2)
+
+extension LockerError: CaseIterable {
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  static var allCases: [LockerError] = [
+    .secretNotFound,
+    .authenticationCanceled,
+    .authenticationFailed,
+    .unknown,
   ]
 }
 
@@ -175,6 +225,15 @@ extension ProtoMethodInterface: SwiftProtobuf._ProtoNameProviding {
     1: .same(proto: "saveSecret"),
     2: .same(proto: "retrieveSecret"),
     3: .same(proto: "deleteSecret"),
+  ]
+}
+
+extension LockerError: SwiftProtobuf._ProtoNameProviding {
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "secretNotFound"),
+    1: .same(proto: "authenticationCanceled"),
+    2: .same(proto: "authenticationFailed"),
+    3: .same(proto: "unknown"),
   ]
 }
 
