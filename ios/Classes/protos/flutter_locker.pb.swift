@@ -7,6 +7,10 @@
 //   https://github.com/apple/swift-protobuf/
 
 // https://pub.dev/packages/protoc_plugin
+
+//  export PATH="$PATH":"$HOME/.pub-cache/bin" or PATH=$PATH:$(pwd)
+//  pub global activate protoc_plugin
+
 // protoc --dart_out=./lib/gen/ protos/flutter_locker.proto
 // protoc --swift_out=./ios/Classes ./protos/flutter_locker.proto
 
@@ -71,7 +75,7 @@ extension ProtoMethodInterface: CaseIterable {
 
 #endif  // swift(>=4.2)
 
-enum LockerError: SwiftProtobuf.Enum {
+enum ProtoLockerError: SwiftProtobuf.Enum {
   typealias RawValue = Int
   case secretNotFound // = 0
   case authenticationCanceled // = 1
@@ -107,9 +111,9 @@ enum LockerError: SwiftProtobuf.Enum {
 
 #if swift(>=4.2)
 
-extension LockerError: CaseIterable {
+extension ProtoLockerError: CaseIterable {
   // The compiler won't synthesize support with the UNRECOGNIZED case.
-  static var allCases: [LockerError] = [
+  static var allCases: [ProtoLockerError] = [
     .secretNotFound,
     .authenticationCanceled,
     .authenticationFailed,
@@ -228,7 +232,7 @@ extension ProtoMethodInterface: SwiftProtobuf._ProtoNameProviding {
   ]
 }
 
-extension LockerError: SwiftProtobuf._ProtoNameProviding {
+extension ProtoLockerError: SwiftProtobuf._ProtoNameProviding {
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     0: .same(proto: "secretNotFound"),
     1: .same(proto: "authenticationCanceled"),

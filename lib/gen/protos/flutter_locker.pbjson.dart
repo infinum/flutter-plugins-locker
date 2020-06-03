@@ -15,8 +15,8 @@ const ProtoMethodInterface$json = const {
   ],
 };
 
-const LockerError$json = const {
-  '1': 'LockerError',
+const ProtoLockerError$json = const {
+  '1': 'ProtoLockerError',
   '2': const [
     const {'1': 'secretNotFound', '2': 0},
     const {'1': 'authenticationCanceled', '2': 1},

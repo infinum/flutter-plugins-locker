@@ -74,17 +74,13 @@ public class FlutterLockerPlugin : FlutterPlugin, MethodCallHandler, ActivityAwa
                         .putString(request.key.toPrefsKey(), goldfingerResult.value()).apply()
                     result.success(null)
                 } else if (goldfingerResult.type() == Goldfinger.Type.ERROR) {
-                    result.error(
-                        FlutterLocker.LockerError.unknown.number.toString(),
-                        "Failed to save secret: ${goldfingerResult.message()}",
-                        null
-                    )
+                    handleGoldfingerError(goldfingerResult, result)
                 }
             }
 
             override fun onError(e: Exception) {
                 result.error(
-                    FlutterLocker.LockerError.unknown.number.toString(),
+                    FlutterLocker.ProtoLockerError.unknown.number.toString(),
                     "Failed to save secret: ${e.message}",
                     null
                 )
@@ -110,13 +106,13 @@ public class FlutterLockerPlugin : FlutterPlugin, MethodCallHandler, ActivityAwa
                     if (goldfingerResult.type() == Goldfinger.Type.SUCCESS) {
                         result.success(goldfingerResult.value())
                     } else if (goldfingerResult.type() == Goldfinger.Type.ERROR) {
-                        handleGoldfingerRetrieveError(goldfingerResult, result)
+                        handleGoldfingerError(goldfingerResult, result)
                     }
                 }
 
                 override fun onError(e: Exception) {
                     result.error(
-                        FlutterLocker.LockerError.unknown.number.toString(),
+                        FlutterLocker.ProtoLockerError.unknown.number.toString(),
                         e.toString(),
                         null
                     )
@@ -124,7 +120,7 @@ public class FlutterLockerPlugin : FlutterPlugin, MethodCallHandler, ActivityAwa
             })
         } ?: kotlin.run {
             result.error(
-                FlutterLocker.LockerError.secretNotFound.number.toString(),
+                FlutterLocker.ProtoLockerError.secretNotFound.number.toString(),
                 "Secret not found for that key",
                 null
             )
@@ -138,20 +134,26 @@ public class FlutterLockerPlugin : FlutterPlugin, MethodCallHandler, ActivityAwa
         result.success(null)
     }
 
-    private fun handleGoldfingerRetrieveError(
+    private fun handleGoldfingerError(
         goldfingerResult: Goldfinger.Result,
         result: Result
     ) {
         if (goldfingerResult.reason() == Goldfinger.Reason.NEGATIVE_BUTTON || goldfingerResult.reason() == Goldfinger.Reason.CANCELED || goldfingerResult.reason() == Goldfinger.Reason.USER_CANCELED) {
             result.error(
-                FlutterLocker.LockerError.authenticationCanceled.number.toString(),
+                FlutterLocker.ProtoLockerError.authenticationCanceled.number.toString(),
                 "Authentication canceled: ${goldfingerResult.message()}",
                 null
             )
         } else if (goldfingerResult.reason() == Goldfinger.Reason.LOCKOUT_PERMANENT || goldfingerResult.reason() == Goldfinger.Reason.LOCKOUT) {
             result.error(
-                FlutterLocker.LockerError.authenticationFailed.number.toString(),
+                FlutterLocker.ProtoLockerError.authenticationFailed.number.toString(),
                 "Authentication failed: ${goldfingerResult.message()}",
+                null
+            )
+        } else {
+            result.error(
+                FlutterLocker.ProtoLockerError.unknown.number.toString(),
+                "Error: ${goldfingerResult.message()}",
                 null
             )
         }

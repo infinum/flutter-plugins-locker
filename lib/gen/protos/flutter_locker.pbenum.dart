@@ -28,22 +28,22 @@ class ProtoMethodInterface extends $pb.ProtobufEnum {
   const ProtoMethodInterface._($core.int v, $core.String n) : super(v, n);
 }
 
-class LockerError extends $pb.ProtobufEnum {
-  static const LockerError secretNotFound = LockerError._(0, 'secretNotFound');
-  static const LockerError authenticationCanceled = LockerError._(1, 'authenticationCanceled');
-  static const LockerError authenticationFailed = LockerError._(2, 'authenticationFailed');
-  static const LockerError unknown = LockerError._(3, 'unknown');
+class ProtoLockerError extends $pb.ProtobufEnum {
+  static const ProtoLockerError secretNotFound = ProtoLockerError._(0, 'secretNotFound');
+  static const ProtoLockerError authenticationCanceled = ProtoLockerError._(1, 'authenticationCanceled');
+  static const ProtoLockerError authenticationFailed = ProtoLockerError._(2, 'authenticationFailed');
+  static const ProtoLockerError unknown = ProtoLockerError._(3, 'unknown');
 
-  static const $core.List<LockerError> values = <LockerError> [
+  static const $core.List<ProtoLockerError> values = <ProtoLockerError> [
     secretNotFound,
     authenticationCanceled,
     authenticationFailed,
     unknown,
   ];
 
-  static final $core.Map<$core.int, LockerError> _byValue = $pb.ProtobufEnum.initByValue(values);
-  static LockerError valueOf($core.int value) => _byValue[value];
+  static final $core.Map<$core.int, ProtoLockerError> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static ProtoLockerError valueOf($core.int value) => _byValue[value];
 
-  const LockerError._($core.int v, $core.String n) : super(v, n);
+  const ProtoLockerError._($core.int v, $core.String n) : super(v, n);
 }
 
