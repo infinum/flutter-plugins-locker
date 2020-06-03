@@ -33,11 +33,13 @@ Deletes the key.
 
 ### Errors
 
-There are some common exceptions you can intercept and handle. All of the exceptions are PlatformExceptions, and in `exception.code` you'll receive these values:
-- 0 - Secret not found, happens when you try to retrieve secret without ever saving it.
-- 1 - Authentication canceled, happens when user cancels the prompt.
-- 2 - Authentication failed, happens when user fails multiple biometric checks and prompt is closed.
-- 3 - All other errors. There are many more specific errors that can happen on any platform. If this happens you can read `exception.message` for more info.
+There are some common exceptions you can intercept and handle. We return FlutterLockerException and you can read `exception.reason` for these common cases:
+
+- secretNotFound - Happens when you try to retrieve a secret that was never saved for that key
+- authenticationCanceled - User canceled the authentication prompt
+- authenticationFailed - User failed authentication, e.g. by too many wrong attempts
+
+There are many more specific errors that can happen on any platform. In that case you'll receive PlatformException with some more info in `exception.message`.
  
  
 ### Notes and setup
