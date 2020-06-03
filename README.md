@@ -33,7 +33,7 @@ Deletes the key.
 
 ### Errors
 
-There are some common exceptions you can intercept and handle. We return FlutterLockerException and you can read `exception.reason` for these common cases:
+There are some common exceptions you can intercept and handle. We return `FlutterLockerException` and you can read `exception.reason` for these common cases:
 
 - secretNotFound - Happens when you try to retrieve a secret that was never saved for that key
 - authenticationCanceled - User canceled the authentication prompt
