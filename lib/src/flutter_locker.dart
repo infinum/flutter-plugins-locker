@@ -47,12 +47,12 @@ class FlutterLocker {
       return await function();
     } catch (on, _) {
       // try to intercept common exceptions
-      if (on is PlatformException) {
-        if (LockerException.fromCode(on.code) != null) {
-          throw LockerException.fromCode(on.code);
-        } else {
-          rethrow;
-        }
+      if (on is! PlatformException) {
+        rethrow;
+      }
+
+      if (LockerException.fromCode(on.code) != null) {
+        throw LockerException.fromCode(on.code);
       } else {
         rethrow;
       }
