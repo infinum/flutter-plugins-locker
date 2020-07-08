@@ -1,17 +1,14 @@
 name: flutter_locker
 description: Plugin that secures your secrets in keychain using biometric authentication.
 version: 1.0.0
-authors:
-  - Josip Krnjic <josip.krnjic@infinum.com>
-  - Ivan Dikic <ivan.dikic@infinum.com>
 repository: https://github.com/infinum/flutter-plugins-locker
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.3.0 <3.0.0"
   flutter: ">=1.10.0"
 
 dependencies:
-  protobuf: any
+  protobuf: ^1.0.1
   flutter:
     sdk: flutter
 
