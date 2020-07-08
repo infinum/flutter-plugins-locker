@@ -1,4 +1,8 @@
 // https://pub.dev/packages/protoc_plugin
+
+//  export PATH="$PATH":"$HOME/.pub-cache/bin" or PATH=$PATH:$(pwd)
+//  pub global activate protoc_plugin
+
 // protoc --dart_out=./lib/gen/ protos/flutter_locker.proto
 // protoc --swift_out=./ios/Classes ./protos/flutter_locker.proto
 
@@ -13,7 +17,7 @@ enum ProtoMethodInterface {
     deleteSecret = 3;
 }
 
-enum LockerError {
+enum ProtoLockerError {
     secretNotFound = 0;
     authenticationCanceled = 1;
     authenticationFailed = 2;

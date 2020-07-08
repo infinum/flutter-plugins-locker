@@ -28,7 +28,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> _saveSecret(BuildContext context) async {
-    FlutterLocker.save(SaveSecretRequest(key, secret, AndroidPrompt("Authenticate", "Cancel"))).then((value) {
+    FlutterLocker.save(SaveSecretRequest(key, secret, AndroidPrompt('Authenticate', 'Cancel'))).then((value) {
       Scaffold.of(context).showSnackBar(SnackBar(content: Text('Successfully Saved Secret: $secret')));
     }).catchError((err) {
       Scaffold.of(context).showSnackBar(SnackBar(content: Text('Error happened: ' + err.toString())));
@@ -37,7 +37,7 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> _retrieveSecret(BuildContext context) async {
     FlutterLocker.retrieve(
-            RetrieveSecretRequest(key, AndroidPrompt("Authenticate", "Cancel"), IOsPrompt("Authenticate")))
+            RetrieveSecretRequest(key, AndroidPrompt('Authenticate', 'Cancel'), IOsPrompt('Authenticate')))
         .then((value) {
       Scaffold.of(context).showSnackBar(SnackBar(content: Text('Retrieved secret: ' + value)));
     }).catchError((err) {
@@ -64,25 +64,25 @@ class _MyAppState extends State<MyApp> {
           ),
           SizedBox(height: 40),
           CupertinoButton.filled(
-              child: Text("Can authenticate"),
+              child: Text('Can authenticate'),
               onPressed: () {
                 _canAuthenticate(context);
               }),
           SizedBox(height: 20),
           CupertinoButton.filled(
-              child: Text("Save secret"),
+              child: Text('Save secret'),
               onPressed: () {
                 _saveSecret(context);
               }),
           SizedBox(height: 20),
           CupertinoButton.filled(
-              child: Text("Retrieve secret"),
+              child: Text('Retrieve secret'),
               onPressed: () {
                 _retrieveSecret(context);
               }),
           SizedBox(height: 20),
           CupertinoButton.filled(
-              child: Text("Delete secret"),
+              child: Text('Delete secret'),
               onPressed: () {
                 _deleteSecret(context);
               })

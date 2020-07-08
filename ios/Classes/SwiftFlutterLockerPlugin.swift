@@ -65,17 +65,17 @@ private extension SwiftFlutterLockerPlugin {
                 result(secret)
             },
             failure: { (failureStatus) in
-                var code = LockerError.unknown
+                var code = ProtoLockerError.unknown
                 
                 switch failureStatus {
                 case errSecItemNotFound:
-                    code = LockerError.secretNotFound
+                    code = ProtoLockerError.secretNotFound
                 case errSecAuthFailed:
-                    code = LockerError.authenticationFailed
+                    code = ProtoLockerError.authenticationFailed
                 case errSecUserCanceled:
-                    code = LockerError.authenticationCanceled
+                    code = ProtoLockerError.authenticationCanceled
                 default:
-                    code = LockerError.unknown
+                    code = ProtoLockerError.unknown
                 }
                 
                 result(FlutterError(code: String(code.rawValue), message: "Security error: " + failureStatus.description, details: nil))
