@@ -1,4 +1,4 @@
-# **flutter_locker🔒** 
+# **Flutter Locker🔒** 
 
 Flutter plugin that secures your secrets in keychain using biometric authentication.
 
