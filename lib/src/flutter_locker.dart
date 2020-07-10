@@ -9,7 +9,8 @@ class FlutterLocker {
 
   /// Checks if the devices has biometric features
   static Future<bool> canAuthenticate() async {
-    final bool success = await _channel.invokeMethod(protos.ProtoMethodInterface.canAuthenticate.value.toString());
+    final bool success = await _channel.invokeMethod(
+        protos.ProtoMethodInterface.canAuthenticate.value.toString());
     return success;
   }
 
@@ -31,7 +32,8 @@ class FlutterLocker {
   static Future<String> retrieve(RetrieveSecretRequest request) async {
     return await _catchCommonError(() async {
       final String secret = await _channel.invokeMethod(
-          protos.ProtoMethodInterface.retrieveSecret.value.toString(), request.toProto().writeToBuffer());
+          protos.ProtoMethodInterface.retrieveSecret.value.toString(),
+          request.toProto().writeToBuffer());
       return secret;
     });
   }
@@ -39,7 +41,9 @@ class FlutterLocker {
   /// Deletes the key.
   static Future<void> delete(String key) async {
     final request = protos.ProtoDeleteRequest()..key = key;
-    await _channel.invokeMethod(ProtoMethodInterface.deleteSecret.value.toString(), request.writeToBuffer());
+    await _channel.invokeMethod(
+        ProtoMethodInterface.deleteSecret.value.toString(),
+        request.writeToBuffer());
   }
 
   static _catchCommonError(Function function) async {

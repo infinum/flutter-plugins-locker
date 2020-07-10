@@ -2,19 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_locker/gen/protos/flutter_locker.pb.dart';
 
 class LockerException implements Exception {
-  LockerException({
-    @required this.reason
-  }) : assert(reason != null);
+  LockerException({@required this.reason}) : assert(reason != null);
 
   final LockerExceptionReason reason;
 
   factory LockerException.fromCode(String code) {
     if (code == ProtoLockerError.secretNotFound.value.toString()) {
       return LockerException(reason: LockerExceptionReason.secretNotFound);
-    } else if (code == ProtoLockerError.authenticationCanceled.value.toString()) {
-      return LockerException(reason: LockerExceptionReason.authenticationCanceled);
+    } else if (code ==
+        ProtoLockerError.authenticationCanceled.value.toString()) {
+      return LockerException(
+          reason: LockerExceptionReason.authenticationCanceled);
     } else if (code == ProtoLockerError.authenticationFailed.value.toString()) {
-      return LockerException(reason: LockerExceptionReason.authenticationFailed);
+      return LockerException(
+          reason: LockerExceptionReason.authenticationFailed);
     } else {
       return null;
     }
@@ -37,7 +38,6 @@ class LockerException implements Exception {
         return '';
     }
   }
-
 }
 
 enum LockerExceptionReason {

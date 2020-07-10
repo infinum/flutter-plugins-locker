@@ -1,4 +1,3 @@
-
 part of flutter_locker;
 
 /// Data structure for saving the secret
@@ -8,7 +7,6 @@ class SaveSecretRequest {
   final String key;
   final String secret;
   final AndroidPrompt androidPrompt;
-
 
   protos.ProtoSaveRequest toProto() {
     return protos.ProtoSaveRequest()
