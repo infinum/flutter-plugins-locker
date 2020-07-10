@@ -21,35 +21,45 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> _canAuthenticate(BuildContext context) async {
     FlutterLocker.canAuthenticate().then((value) {
-      Scaffold.of(context).showSnackBar(SnackBar(content: Text('Can authenticate: ' + value.toString())));
+      Scaffold.of(context).showSnackBar(
+          SnackBar(content: Text('Can authenticate: ' + value.toString())));
     }).catchError((err) {
-      Scaffold.of(context).showSnackBar(SnackBar(content: Text('Error happened: ' + err.toString())));
+      Scaffold.of(context).showSnackBar(
+          SnackBar(content: Text('Error happened: ' + err.toString())));
     });
   }
 
   Future<void> _saveSecret(BuildContext context) async {
-    FlutterLocker.save(SaveSecretRequest(key, secret, AndroidPrompt('Authenticate', 'Cancel'))).then((value) {
-      Scaffold.of(context).showSnackBar(SnackBar(content: Text('Successfully Saved Secret: $secret')));
+    FlutterLocker.save(SaveSecretRequest(
+            key, secret, AndroidPrompt('Authenticate', 'Cancel')))
+        .then((value) {
+      Scaffold.of(context).showSnackBar(
+          SnackBar(content: Text('Successfully Saved Secret: $secret')));
     }).catchError((err) {
-      Scaffold.of(context).showSnackBar(SnackBar(content: Text('Error happened: ' + err.toString())));
+      Scaffold.of(context).showSnackBar(
+          SnackBar(content: Text('Error happened: ' + err.toString())));
     });
   }
 
   Future<void> _retrieveSecret(BuildContext context) async {
-    FlutterLocker.retrieve(
-            RetrieveSecretRequest(key, AndroidPrompt('Authenticate', 'Cancel'), IOsPrompt('Authenticate')))
+    FlutterLocker.retrieve(RetrieveSecretRequest(key,
+            AndroidPrompt('Authenticate', 'Cancel'), IOsPrompt('Authenticate')))
         .then((value) {
-      Scaffold.of(context).showSnackBar(SnackBar(content: Text('Retrieved secret: ' + value)));
+      Scaffold.of(context)
+          .showSnackBar(SnackBar(content: Text('Retrieved secret: ' + value)));
     }).catchError((err) {
-      Scaffold.of(context).showSnackBar(SnackBar(content: Text('Error happened: ' + err.toString())));
+      Scaffold.of(context).showSnackBar(
+          SnackBar(content: Text('Error happened: ' + err.toString())));
     });
   }
 
   Future<void> _deleteSecret(BuildContext context) async {
     FlutterLocker.delete(key).then((value) {
-      Scaffold.of(context).showSnackBar(SnackBar(content: Text('Secret deleted.')));
+      Scaffold.of(context)
+          .showSnackBar(SnackBar(content: Text('Secret deleted.')));
     }).catchError((err) {
-      Scaffold.of(context).showSnackBar(SnackBar(content: Text('Error happened: ' + err.toString())));
+      Scaffold.of(context).showSnackBar(
+          SnackBar(content: Text('Error happened: ' + err.toString())));
     });
   }
 
@@ -60,7 +70,10 @@ class _MyAppState extends State<MyApp> {
         children: <Widget>[
           SizedBox(height: 100),
           Center(
-            child: Text('Locker example', style: TextStyle(fontSize: 24),),
+            child: Text(
+              'Locker example',
+              style: TextStyle(fontSize: 24),
+            ),
           ),
           SizedBox(height: 40),
           CupertinoButton.filled(

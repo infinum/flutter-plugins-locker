@@ -1,4 +1,3 @@
-
 library flutter_locker;
 
 import 'dart:async';
