@@ -50,14 +50,18 @@ class FlutterLocker {
     try {
       return await function();
     } catch (on, _) {
+      print('Catching common error' + on.toString());
       // try to intercept common exceptions
       if (on is! PlatformException) {
+        print('Rethrow PlatformException');
         rethrow;
       }
 
       if (LockerException.fromCode(on.code) != null) {
+        print('Throw LockerException');
         throw LockerException.fromCode(on.code);
       } else {
+        print('Rethrow other');
         rethrow;
       }
     }

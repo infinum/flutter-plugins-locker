@@ -30,7 +30,7 @@ public class FlutterLockerPlugin : FlutterPlugin, MethodCallHandler, ActivityAwa
             "flutter_locker"
         )
         channel.setMethodCallHandler(this)
-        goldfinger = Goldfinger.Builder(context).build()
+        goldfinger = Goldfinger.Builder(context).logEnabled(true).build()
     }
 
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
