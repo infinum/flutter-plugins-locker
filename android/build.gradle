@@ -66,6 +66,6 @@ protobuf {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'co.infinum:goldfinger:2.0.0'
+    implementation 'co.infinum:goldfinger:2.0.1'
     implementation 'com.google.protobuf:protobuf-lite:3.0.1'
 }
