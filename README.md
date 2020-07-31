@@ -1,6 +1,6 @@
 # **Flutter Locker🔒** 
 
-Flutter plugin that secures your secrets in keychain using biometric authentication.
+Flutter plugin that secures your secrets in keychain using biometric authentication (Fingerprint, Touch ID, Face ID...).
 
 
 It uses:
