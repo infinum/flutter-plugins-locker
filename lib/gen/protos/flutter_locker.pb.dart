@@ -11,6 +11,7 @@ import 'package:protobuf/protobuf.dart' as $pb;
 
 export 'flutter_locker.pbenum.dart';
 
+/// Generated protobuf
 class ProtoAndroidPrompt extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i =
       $pb.BuilderInfo('ProtoAndroidPrompt', createEmptyInstance: create)
@@ -78,6 +79,7 @@ class ProtoAndroidPrompt extends $pb.GeneratedMessage {
   void clearDescription() => clearField(3);
 }
 
+/// Generated protobuf
 class ProtoIOsPrompt extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i =
       $pb.BuilderInfo('ProtoIOsPrompt', createEmptyInstance: create)
@@ -119,6 +121,7 @@ class ProtoIOsPrompt extends $pb.GeneratedMessage {
   void clearTouchIdText() => clearField(1);
 }
 
+/// Generated protobuf
 class ProtoSaveRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i =
       $pb.BuilderInfo('ProtoSaveRequest', createEmptyInstance: create)
@@ -189,6 +192,7 @@ class ProtoSaveRequest extends $pb.GeneratedMessage {
   ProtoAndroidPrompt ensureAndroidPrompt() => $_ensure(2);
 }
 
+/// Generated protobuf
 class ProtoRetrieveRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i =
       $pb.BuilderInfo('ProtoRetrieveRequest', createEmptyInstance: create)
@@ -263,6 +267,7 @@ class ProtoRetrieveRequest extends $pb.GeneratedMessage {
   ProtoIOsPrompt ensureIOsPrompt() => $_ensure(2);
 }
 
+/// Generated protobuf
 class ProtoDeleteRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i =
       $pb.BuilderInfo('ProtoDeleteRequest', createEmptyInstance: create)

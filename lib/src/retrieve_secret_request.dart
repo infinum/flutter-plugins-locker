@@ -8,6 +8,7 @@ class RetrieveSecretRequest {
   final AndroidPrompt androidPrompt;
   final IOsPrompt iOsPrompt;
 
+  /// Returns associated proto class
   protos.ProtoRetrieveRequest toProto() {
     return protos.ProtoRetrieveRequest()
       ..key = key

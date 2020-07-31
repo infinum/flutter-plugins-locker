@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_locker/gen/protos/flutter_locker.pb.dart';
 
+/// Common exception that Locker recognizes on both platforms.
+///
+/// Locker will throw PlatformException for all different kind of platform specific issues.
 class LockerException implements Exception {
   LockerException({@required this.reason}) : assert(reason != null);
 
@@ -26,6 +29,7 @@ class LockerException implements Exception {
     return 'LockerException: ${_reasonToMessage()}';
   }
 
+  /// Returns message for developer
   String _reasonToMessage() {
     switch (reason) {
       case LockerExceptionReason.secretNotFound:
@@ -40,6 +44,7 @@ class LockerException implements Exception {
   }
 }
 
+/// Common exceptions that are currently handled
 enum LockerExceptionReason {
   // Happens when you try to retrieve a secret that was never saved for that key
   secretNotFound,

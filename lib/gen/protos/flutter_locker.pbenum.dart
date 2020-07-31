@@ -9,6 +9,7 @@
 import 'dart:core' as $core;
 import 'package:protobuf/protobuf.dart' as $pb;
 
+/// Generated protobuf
 class ProtoMethodInterface extends $pb.ProtobufEnum {
   static const ProtoMethodInterface canAuthenticate =
       ProtoMethodInterface._(0, 'canAuthenticate');
@@ -33,6 +34,7 @@ class ProtoMethodInterface extends $pb.ProtobufEnum {
   const ProtoMethodInterface._($core.int v, $core.String n) : super(v, n);
 }
 
+/// Generated protobuf
 class ProtoLockerError extends $pb.ProtobufEnum {
   static const ProtoLockerError secretNotFound =
       ProtoLockerError._(0, 'secretNotFound');

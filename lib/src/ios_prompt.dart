@@ -9,6 +9,7 @@ class IOsPrompt {
 
   final String touchIdText;
 
+  /// Returns associated proto class
   protos.ProtoIOsPrompt toProto() {
     return protos.ProtoIOsPrompt()..touchIdText = touchIdText;
   }

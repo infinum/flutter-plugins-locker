@@ -12,6 +12,7 @@ class AndroidPrompt {
   final String cancelLabel;
   final String description;
 
+  /// Returns associated proto class
   protos.ProtoAndroidPrompt toProto() {
     var prompt = protos.ProtoAndroidPrompt()
       ..titleText = title

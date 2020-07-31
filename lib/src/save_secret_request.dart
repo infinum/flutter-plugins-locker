@@ -8,6 +8,7 @@ class SaveSecretRequest {
   final String secret;
   final AndroidPrompt androidPrompt;
 
+  /// Returns associated proto class
   protos.ProtoSaveRequest toProto() {
     return protos.ProtoSaveRequest()
       ..key = key

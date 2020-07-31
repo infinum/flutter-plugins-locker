@@ -1,6 +1,6 @@
 name: flutter_locker
-description: Plugin that secures your secrets in keychain using biometric authentication.
-version: 1.0.1
+description: Secures your secrets in keychain using biometric authentication (Fingerprint, Touch ID, Face ID...)
+version: 1.0.2
 repository: https://github.com/infinum/flutter-plugins-locker
 homepage: https://github.com/infinum/flutter-plugins-locker
 
