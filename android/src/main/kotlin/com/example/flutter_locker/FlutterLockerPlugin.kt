@@ -12,10 +12,10 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
-import java.lang.Exception
+import io.flutter.plugin.common.PluginRegistry.Registrar
 
 /** FlutterLockerPlugin */
-public class FlutterLockerPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
+public class FlutterLockerPlugin () : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     private lateinit var channel: MethodChannel
     private lateinit var context: Context
@@ -31,6 +31,31 @@ public class FlutterLockerPlugin : FlutterPlugin, MethodCallHandler, ActivityAwa
         )
         channel.setMethodCallHandler(this)
         goldfinger = Goldfinger.Builder(context).build()
+    }
+
+    /** V1 embedding */
+    companion object {
+        @JvmStatic
+        fun registerWith(registrar: Registrar) {
+            val channel = MethodChannel(registrar.messenger(), "flutter_locker")
+
+            val context: Context = registrar.context()
+            val activity: Activity = registrar.activity()
+
+            val gf = Goldfinger.Builder( registrar.context()).build()
+            channel.setMethodCallHandler(FlutterLockerPlugin(activity, context, channel, gf))
+
+
+        }
+    }
+
+    /** V1 embedding */
+    private constructor(activityA: Activity, contextA: Context, channelA: MethodChannel, goldfingerA: Goldfinger) : this() {
+        activity = activityA
+        this.context = contextA
+        channel = channelA
+        goldfinger = goldfingerA
+
     }
 
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
