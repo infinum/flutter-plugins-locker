@@ -1,5 +1,9 @@
 # **Flutter Locker🔒** 
 
+<p align="center">
+    <img src="./Locker-github.jpg" width="700" max-width="50%" alt="Locker"/>
+</p>
+
 Flutter plugin that secures your secrets in keychain using biometric authentication (Fingerprint, Touch ID, Face ID...).
 
 
