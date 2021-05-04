@@ -5,11 +5,11 @@ import 'package:flutter_locker/gen/protos/flutter_locker.pb.dart';
 ///
 /// Locker will throw PlatformException for all different kind of platform specific issues.
 class LockerException implements Exception {
-  LockerException({@required this.reason}) : assert(reason != null);
+  LockerException({required this.reason});
 
   final LockerExceptionReason reason;
 
-  factory LockerException.fromCode(String code) {
+  static LockerException? fromCode(String? code) {
     if (code == ProtoLockerError.secretNotFound.value.toString()) {
       return LockerException(reason: LockerExceptionReason.secretNotFound);
     } else if (code ==

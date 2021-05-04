@@ -2,9 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-import 'package:flutter/services.dart';
 import 'package:flutter_locker/flutter_locker.dart';
-import 'package:flutter_locker/gen/protos/flutter_locker.pb.dart';
 
 void main() {
   runApp(MaterialApp(home: Scaffold(body: MyApp())));

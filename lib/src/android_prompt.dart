@@ -4,13 +4,11 @@ part of flutter_locker;
 ///
 /// title and cancel are required.
 class AndroidPrompt {
-  AndroidPrompt(this.title, this.cancelLabel, {this.description})
-      : assert(title != null),
-        assert(cancelLabel != null);
+  AndroidPrompt(this.title, this.cancelLabel, {this.description});
 
   final String title;
   final String cancelLabel;
-  final String description;
+  final String? description;
 
   /// Returns associated proto class
   protos.ProtoAndroidPrompt toProto() {
@@ -19,7 +17,7 @@ class AndroidPrompt {
       ..cancelText = cancelLabel;
 
     if (description != null) {
-      prompt.description = description;
+      prompt.description = description!;
     }
 
     return prompt;
