@@ -9,3 +9,7 @@
 ## 1.0.2
 
 * Updated documentation.
+
+## 2.0.0
+
+* Added null safety

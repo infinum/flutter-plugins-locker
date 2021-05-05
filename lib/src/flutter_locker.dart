@@ -8,8 +8,8 @@ class FlutterLocker {
   static const MethodChannel _channel = const MethodChannel('flutter_locker');
 
   /// Checks if the devices has biometric features
-  static Future<bool> canAuthenticate() async {
-    final bool success = await _channel.invokeMethod(
+  static Future<bool?> canAuthenticate() async {
+    final bool? success = await _channel.invokeMethod(
         protos.ProtoMethodInterface.canAuthenticate.value.toString());
     return success;
   }
@@ -31,7 +31,7 @@ class FlutterLocker {
   /// You need to provide a prompt for Android and iOS. Prompt for iOS is used only with TouchID. FaceID uses strings for Info.plist.
   static Future<String> retrieve(RetrieveSecretRequest request) async {
     return await _catchCommonError(() async {
-      final String secret = await _channel.invokeMethod(
+      final String? secret = await _channel.invokeMethod(
           protos.ProtoMethodInterface.retrieveSecret.value.toString(),
           request.toProto().writeToBuffer());
       return secret;
@@ -55,8 +55,9 @@ class FlutterLocker {
         rethrow;
       }
 
-      if (LockerException.fromCode(on.code) != null) {
-        throw LockerException.fromCode(on.code);
+      final lockerException = LockerException.fromCode(on.code);
+      if (lockerException != null) {
+        throw lockerException;
       } else {
         rethrow;
       }
