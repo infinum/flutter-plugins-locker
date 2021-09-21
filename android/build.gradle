@@ -6,7 +6,7 @@ buildscript {
     repositories {
         mavenCentral()
         google()
-        jcenter()
+        // jcenter()
     }
 
     dependencies {
@@ -20,7 +20,7 @@ rootProject.allprojects {
     repositories {
         mavenCentral()
         google()
-        jcenter()
+        // jcenter()
     }
 }
 
