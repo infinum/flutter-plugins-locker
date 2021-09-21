@@ -6,7 +6,7 @@ buildscript {
     repositories {
         mavenCentral()
         google()
-        // jcenter()
+        jcenter()
     }
 
     dependencies {
@@ -20,7 +20,7 @@ rootProject.allprojects {
     repositories {
         mavenCentral()
         google()
-        // jcenter()
+        jcenter()
     }
 }
 
@@ -69,5 +69,6 @@ protobuf {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'co.infinum:goldfinger:2.0.0'
-    implementation 'com.google.protobuf:protobuf-lite:3.0.1'
+    // implementation 'com.google.protobuf:protobuf-lite:3.0.1'
+    implementation 'com.google.protobuf:protobuf-javalite:3.8.0'
 }
