@@ -49,21 +49,24 @@ protobuf {
     // Configure the protoc executable
     protoc {
         // Download from repositories
-        artifact = 'com.google.protobuf:protoc:3.9.1'
-    }
-    plugins {
-        javalite {
-            // The codegen for lite comes as a separate artifact
-            artifact = 'com.google.protobuf:protoc-gen-javalite:3.0.0'
+        if (osdetector.os == "osx") {
+            artifact = 'com.google.protobuf:protoc:3.9.1:osx-x86_64'
+        } else {
+            artifact = 'com.google.protobuf:protoc:3.9.1'
         }
     }
+    // plugins {
+    //     javalite {
+    //         // The codegen for lite comes as a separate artifact
+    //         artifact = 'com.google.protobuf:protoc-gen-javalite:3.0.0'
+    //     }
+    // }
     generateProtoTasks {
         all().each { task ->
-            task.builtins {
-                remove java
-            }
             task.plugins {
-                lite { }
+                java {
+                    option "lite"
+                }
             }
         }
     }
