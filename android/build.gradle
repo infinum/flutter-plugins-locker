@@ -59,8 +59,11 @@ protobuf {
     }
     generateProtoTasks {
         all().each { task ->
+            task.builtins {
+                remove java
+            }
             task.plugins {
-                javalite { }
+                lite { }
             }
         }
     }
