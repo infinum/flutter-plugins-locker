@@ -9,7 +9,7 @@ environment:
   flutter: ">=1.10.0"
 
 dependencies:
-  protobuf: ^2.0.0
+  protobuf: ^2.0.1
   flutter:
     sdk: flutter
 

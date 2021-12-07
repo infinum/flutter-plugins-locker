@@ -58,10 +58,10 @@ private extension SwiftFlutterLockerPlugin {
             for: retrieveRequest.key,
             operationPrompt: retrieveRequest.iOsPrompt.touchIDText,
             success: { (secret) in
-                guard let secret = secret else {
-                    result(FlutterError(code: "ERROR", message: "Locker.retrieve error, unable to parse keychain data to string.", details: nil))
-                    return
-                }
+                // guard let secret = secret else {
+                //     result(FlutterError(code: "ERROR", message: "Locker.retrieve error, unable to parse keychain data to string.", details: nil))
+                //     return
+                // }
                 result(secret)
             },
             failure: { (failureStatus) in
