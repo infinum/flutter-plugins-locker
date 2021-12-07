@@ -13,3 +13,7 @@
 ## 2.0.0
 
 * Added null safety
+
+## 2.0.1
+
+* Updated with iOS Locker 3.0
