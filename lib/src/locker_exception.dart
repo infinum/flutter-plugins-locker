@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_locker/gen/protos/flutter_locker.pb.dart';
+part of flutter_locker;
+
+
 
 /// Common exception that Locker recognizes on both platforms.
 ///
