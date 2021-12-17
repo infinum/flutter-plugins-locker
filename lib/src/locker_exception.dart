@@ -1,7 +1,5 @@
 part of flutter_locker;
 
-
-
 /// Common exception that Locker recognizes on both platforms.
 ///
 /// Locker will throw PlatformException for all different kind of platform specific issues.
@@ -39,8 +37,6 @@ class LockerException implements Exception {
         return 'Authentication canceled by user.';
       case LockerExceptionReason.authenticationFailed:
         return 'User failed to authenticate.';
-      default:
-        return '';
     }
   }
 }

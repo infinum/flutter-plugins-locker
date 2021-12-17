@@ -2,7 +2,6 @@ part of flutter_locker;
 
 /// Flutter plugin that secures your secrets in keychain using biometric authentication.
 class FlutterLocker {
-  /// Singleton
   FlutterLocker._();
 
   static const MethodChannel _channel = const MethodChannel('flutter_locker');
@@ -49,13 +48,8 @@ class FlutterLocker {
   static _catchCommonError(Function function) async {
     try {
       return await function();
-    } catch (on, _) {
-      // try to intercept common exceptions
-      if (on is! PlatformException) {
-        rethrow;
-      }
-
-      final lockerException = LockerException.fromCode(on.code);
+    } on PlatformException catch (exception) {
+      final lockerException = LockerException.fromCode(exception.code);
       if (lockerException != null) {
         throw lockerException;
       } else {
