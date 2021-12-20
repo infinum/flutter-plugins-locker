@@ -139,6 +139,7 @@ lib/assets.dart
 .packages.generated
 .pub-cache/
 .pub/
+pubspec.lock
 
 # Android related
 **/android/**/gradle-wrapper.jar
