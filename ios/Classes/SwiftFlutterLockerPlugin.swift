@@ -61,20 +61,20 @@ private extension SwiftFlutterLockerPlugin {
                 result(secret)
             },
             failure: { (failureStatus) in
-                var code = ProtoLockerError.unknown
+                var code: Int = -1;
                 
                 switch failureStatus {
                 case errSecItemNotFound:
-                    code = ProtoLockerError.secretNotFound
+                    code = ProtoLockerError.secretNotFound.rawValue
                 case errSecAuthFailed:
-                    code = ProtoLockerError.authenticationFailed
+                    code = ProtoLockerError.authenticationFailed.rawValue
                 case errSecUserCanceled:
-                    code = ProtoLockerError.authenticationCanceled
+                    code = ProtoLockerError.authenticationCanceled.rawValue
                 default:
-                    code = ProtoLockerError.unknown
+                    code = Int(failureStatus)
                 }
                 
-                result(FlutterError(code: String(code.rawValue), message: "Security error: " + failureStatus.description, details: nil))
+                result(FlutterError(code: String(code), message: "Security error: " + failureStatus.description, details: nil))
             })
     }
     
