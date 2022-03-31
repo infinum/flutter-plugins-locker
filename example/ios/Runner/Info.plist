@@ -4,8 +4,8 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
-	<key>NSFaceIDUsageDescription</key>
-	<string>** Add your Face ID Usage Description **</string>
+	<key>CFBundleDisplayName</key>
+	<string>Flutter Locker Example</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
