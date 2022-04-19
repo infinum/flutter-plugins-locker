@@ -47,12 +47,12 @@ protobuf {
     // Configure the protoc executable
     protoc {
         // Download from repositories
-        artifact = 'com.google.protobuf:protoc:3.9.1'
+        artifact = 'com.google.protobuf:protoc:3.9.1:osx-x86_64'
     }
     plugins {
         javalite {
             // The codegen for lite comes as a separate artifact
-            artifact = 'com.google.protobuf:protoc-gen-javalite:3.0.0'
+            artifact = 'com.google.protobuf:protoc-gen-javalite:3.0.0:osx-x86_64'
         }
     }
     generateProtoTasks {

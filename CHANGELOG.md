@@ -26,3 +26,7 @@
 
 * Exposing `LockerException`
 * Updated documentation and example
+
+## 2.0.4
+
+* Support building for Android on Apple M1 Macs
