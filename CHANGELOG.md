@@ -30,3 +30,4 @@
 ## 2.0.4
 
 * Support building for Android on Apple M1 Macs
+* Updated iOS Locker Pod
