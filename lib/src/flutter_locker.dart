@@ -16,14 +16,22 @@ class FlutterLocker {
   /// Saves the secret.
   ///
   /// On Android prompt is shown, while on iOS there is no need for the prompt when saving.
-  static Future<void> save(gen.SaveSecretRequest request) async {
+  static Future<void> save(SaveSecretRequest request) async {
     await _catchCommonError(() async {
       // await _channel.invokeMethod<void>(
       //   // protos.ProtoMethodInterface.saveSecret.value.toString(),
       //   // request.toProto().writeToBuffer(),
       // );
 
-      await _pigeonApi.save(request);
+      await _pigeonApi.save(gen.SaveSecretRequest(
+        key: request.key,
+        androidPrompt: gen.AndroidPrompt(
+          title: request.androidPrompt.title,
+          description: request.androidPrompt.description,
+          cancelLabel: request.androidPrompt.cancelLabel,
+        ),
+        secret: request.secret,
+      ));
 
       return '';
     });
@@ -32,13 +40,23 @@ class FlutterLocker {
   /// Retrieves the secret.
   ///
   /// You need to provide a prompt for Android and iOS. Prompt for iOS is used only with TouchID. FaceID uses strings for Info.plist.
-  static Future<String> retrieve(gen.RetrieveSecretRequest request) async {
+  static Future<String> retrieve(RetrieveSecretRequest request) async {
     return await _catchCommonError(() async {
       // final String? secret = await _channel.invokeMethod();
       // protos.ProtoMethodInterface.retrieveSecret.value.toString(), request.toProto().writeToBuffer());
       // return secret ?? '';
-      final _value = await _pigeonApi.retrieve(request);
-      return _value ?? '';
+      final _value = await _pigeonApi.retrieve(gen.RetrieveSecretRequest(
+        key: request.key,
+        androidPrompt: gen.AndroidPrompt(
+          title: request.androidPrompt.title,
+          description: request.androidPrompt.description,
+          cancelLabel: request.androidPrompt.cancelLabel,
+        ),
+        iOsPrompt: gen.IOsPrompt(
+          touchIdText: request.iOsPrompt.touchIdText,
+        ),
+      ));
+      return _value;
     });
   }
 
