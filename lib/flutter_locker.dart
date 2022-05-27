@@ -8,4 +8,4 @@ import 'package:pigeon/pigeon.dart';
 
 part 'src/flutter_locker.dart';
 part 'src/locker_exception.dart';
-part 'src/pigeon_api.dart';
+part 'src/locker_api.dart';
