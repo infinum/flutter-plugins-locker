@@ -1,71 +1,58 @@
-group 'com.example.flutter_locker'
+group 'com.infinum.flutter_locker'
 version '1.0-SNAPSHOT'
 
 buildscript {
-    ext.kotlin_version = '1.3.50'
+    ext.kotlin_version = '1.6.21'
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.0'
+        classpath 'com.android.tools.build:gradle:4.1.3'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.10'
-    }
-}
-
-rootProject.allprojects {
-    repositories {
-        google()
-        jcenter()
     }
 }
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'com.google.protobuf'
+
+repositories {
+    mavenCentral()
+    google()
+    maven {
+        url './flutter_locker'
+    }
+    maven {
+        url 'https://storage.googleapis.com/download.flutter.io'
+    }
+}
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 31
 
     sourceSets {
         main {
-            proto.srcDir '../protos'
             java.srcDirs += 'src/main/kotlin'
         }
     }
     defaultConfig {
-        minSdkVersion 16
+        minSdkVersion 21
     }
     lintOptions {
         disable 'InvalidPackage'
     }
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
 }
 
-protobuf {
-    // Configure the protoc executable
-    protoc {
-        // Download from repositories
-        artifact = 'com.google.protobuf:protoc:3.9.1:osx-x86_64'
-    }
-    plugins {
-        javalite {
-            // The codegen for lite comes as a separate artifact
-            artifact = 'com.google.protobuf:protoc-gen-javalite:3.0.0:osx-x86_64'
-        }
-    }
-    generateProtoTasks {
-        all().each { task ->
-            task.plugins {
-                javalite { }
-            }
-        }
-    }
+configurations {
+    profileImplementation{}
 }
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'co.infinum:goldfinger:2.0.0'
-    implementation 'com.google.protobuf:protobuf-lite:3.0.1'
+    implementation 'co.infinum:goldfinger:2.0.1'
 }
