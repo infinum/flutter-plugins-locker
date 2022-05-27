@@ -8,13 +8,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef NS_ENUM(NSUInteger, LockerError) {
-  LockerErrorSecretNotFound = 0,
-  LockerErrorAuthenticationCanceled = 1,
-  LockerErrorAuthenticationFailed = 2,
-  LockerErrorUnknown = 3,
-};
-
 @class RetrieveSecretRequest;
 @class SaveSecretRequest;
 @class AndroidPrompt;
@@ -60,16 +53,16 @@ typedef NS_ENUM(NSUInteger, LockerError) {
 @property(nonatomic, copy) NSString * touchIdText;
 @end
 
-/// The codec used by FlutterLockerApi.
-NSObject<FlutterMessageCodec> *FlutterLockerApiGetCodec(void);
+/// The codec used by PigeonApi.
+NSObject<FlutterMessageCodec> *PigeonApiGetCodec(void);
 
-@protocol FlutterLockerApi
+@protocol PigeonApi
 - (void)canAuthenticateWithCompletion:(void(^)(NSNumber *_Nullable, FlutterError *_Nullable))completion;
 - (void)saveRequest:(SaveSecretRequest *)request completion:(void(^)(NSNumber *_Nullable, FlutterError *_Nullable))completion;
 - (void)retrieveRequest:(RetrieveSecretRequest *)request completion:(void(^)(NSString *_Nullable, FlutterError *_Nullable))completion;
 - (void)deleteKey:(NSString *)key completion:(void(^)(FlutterError *_Nullable))completion;
 @end
 
-extern void FlutterLockerApiSetup(id<FlutterBinaryMessenger> binaryMessenger, NSObject<FlutterLockerApi> *_Nullable api);
+extern void PigeonApiSetup(id<FlutterBinaryMessenger> binaryMessenger, NSObject<PigeonApi> *_Nullable api);
 
 NS_ASSUME_NONNULL_END

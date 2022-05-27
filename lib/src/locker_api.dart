@@ -29,13 +29,6 @@ class AndroidPrompt {
   final String? description;
 }
 
-enum LockerError {
-  secretNotFound,
-  authenticationCanceled,
-  authenticationFailed,
-  unknown,
-}
-
 /// The iOS native dialog is only shown when retrieving secret.
 ///
 /// - For phones with Touch ID, the [touchIdText] is displayed in prompt.
@@ -47,7 +40,7 @@ class IOsPrompt {
 }
 
 @HostApi()
-abstract class FlutterLockerApi {
+abstract class PigeonApi {
   @async
   bool canAuthenticate();
 
