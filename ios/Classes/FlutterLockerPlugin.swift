@@ -2,7 +2,7 @@ import Flutter
 import UIKit
 import Locker
 
-public class SwiftFlutterLockerPlugin: NSObject, PigeonApi, FlutterPlugin {
+public class FlutterLockerPlugin: NSObject, PigeonApi, FlutterPlugin {
     public func canAuthenticate(completion: @escaping (NSNumber?, FlutterError?) -> Void) {
         let supportedBiometrics = Locker.configuredBiometricsAuthentication
         completion(supportedBiometrics != BiometricsType.none ? 1 : 0, nil)
@@ -48,7 +48,7 @@ public class SwiftFlutterLockerPlugin: NSObject, PigeonApi, FlutterPlugin {
     }
     
   public static func register(with registrar: FlutterPluginRegistrar) {
-      let instance = SwiftFlutterLockerPlugin()
+      let instance = FlutterLockerPlugin()
       PigeonApiSetup(registrar.messenger(), instance)
   }
 
