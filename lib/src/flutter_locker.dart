@@ -4,9 +4,7 @@ part of flutter_locker;
 class FlutterLocker {
   FlutterLocker._();
 
-  static const MethodChannel _channel = const MethodChannel('flutter_locker');
-
-  static gen.PigeonApi _pigeonApi = gen.PigeonApi();
+  static PigeonApi _pigeonApi = PigeonApi();
 
   /// Checks if the devices has biometric features
   static Future<bool?> canAuthenticate() {
@@ -23,15 +21,7 @@ class FlutterLocker {
       //   // request.toProto().writeToBuffer(),
       // );
 
-      await _pigeonApi.save(gen.SaveSecretRequest(
-        key: request.key,
-        androidPrompt: gen.AndroidPrompt(
-          title: request.androidPrompt.title,
-          description: request.androidPrompt.description,
-          cancelLabel: request.androidPrompt.cancelLabel,
-        ),
-        secret: request.secret,
-      ));
+      await _pigeonApi.save(request);
 
       return '';
     });
@@ -45,17 +35,7 @@ class FlutterLocker {
       // final String? secret = await _channel.invokeMethod();
       // protos.ProtoMethodInterface.retrieveSecret.value.toString(), request.toProto().writeToBuffer());
       // return secret ?? '';
-      final _value = await _pigeonApi.retrieve(gen.RetrieveSecretRequest(
-        key: request.key,
-        androidPrompt: gen.AndroidPrompt(
-          title: request.androidPrompt.title,
-          description: request.androidPrompt.description,
-          cancelLabel: request.androidPrompt.cancelLabel,
-        ),
-        iOsPrompt: gen.IOsPrompt(
-          touchIdText: request.iOsPrompt.touchIdText,
-        ),
-      ));
+      final _value = await _pigeonApi.retrieve(request);
       return _value;
     });
   }

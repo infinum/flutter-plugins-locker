@@ -1,4 +1,4 @@
-part of flutter_locker;
+import 'package:pigeon/pigeon.dart';
 
 /// Data structure for retrieving the saved secret
 class RetrieveSecretRequest {

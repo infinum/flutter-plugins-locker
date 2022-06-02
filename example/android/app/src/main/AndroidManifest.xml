@@ -2,7 +2,6 @@
     package="com.example.flutter_locker_example">
    <application
         android:label="flutter_locker_example"
-        android:name="io.flutter.embedding.android.FlutterActivity"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

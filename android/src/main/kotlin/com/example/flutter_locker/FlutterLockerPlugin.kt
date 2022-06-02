@@ -1,20 +1,18 @@
-package com.infinum.flutter_locker
+package com.example.flutter_locker
 
 import android.app.Activity
 import android.content.Context
 import androidx.fragment.app.FragmentActivity
 import co.infinum.goldfinger.Goldfinger
+import io.flutter.embedding.engine.plugins.FlutterPlugin
+import io.flutter.embedding.engine.plugins.activity.ActivityAware
+import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
 import kotlin.Exception
 
 /** FlutterLockerPlugin */
-public class FlutterLockerPlugin : FlutterLocker.PigeonApi {
-  private lateinit var context: Context
+public class FlutterLockerPlugin : FlutterPlugin, ActivityAware, FlutterLocker.PigeonApi {
   private lateinit var activity: Activity
-  private var goldfinger: Goldfinger
-
-  init {
-    goldfinger = Goldfinger.Builder(context).build()
-  }
+  private lateinit var goldfinger: Goldfinger
 
   override fun canAuthenticate(result: FlutterLocker.Result<Boolean>?) {
     result?.success(goldfinger.canAuthenticate())
@@ -32,7 +30,7 @@ public class FlutterLockerPlugin : FlutterLocker.PigeonApi {
         if (goldfingerResult.type() == Goldfinger.Type.SUCCESS) {
           activity.getPreferences(Context.MODE_PRIVATE).edit()
             .putString(request.key.toPrefsKey(), goldfingerResult.value()).apply()
-          result?.success(null)
+          result?.success(true)
         } else if (goldfingerResult.type() == Goldfinger.Type.ERROR) {
           handleGoldfingerError(goldfingerResult, result)
         }
@@ -99,4 +97,28 @@ public class FlutterLockerPlugin : FlutterLocker.PigeonApi {
 
   // When saving to prefs we add this prefix to avoid any possible clash with other keys
   fun String.toPrefsKey(): String = "\$_flutter_locker_$this"
+  override fun onAttachedToEngine(binding: FlutterPlugin.FlutterPluginBinding) {
+    goldfinger = Goldfinger.Builder(binding.applicationContext).build()
+    FlutterLocker.PigeonApi.setup(binding.binaryMessenger, this)
+  }
+
+  override fun onAttachedToActivity(binding: ActivityPluginBinding) {
+    activity = binding.activity;
+  }
+
+  override fun onDetachedFromActivityForConfigChanges() {
+    // no-op
+  }
+
+  override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {
+    activity = binding.activity;
+  }
+
+  override fun onDetachedFromActivity() {
+    // no-op
+  }
+
+  override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
+    // no-op
+  }
 }
