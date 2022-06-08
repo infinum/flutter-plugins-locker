@@ -5,7 +5,7 @@ import Locker
 public class FlutterLockerPlugin: NSObject, PigeonApi, FlutterPlugin {
     public func canAuthenticate(completion: @escaping (NSNumber?, FlutterError?) -> Void) {
         let supportedBiometrics = Locker.configuredBiometricsAuthentication
-        completion(supportedBiometrics != BiometricsType.none ? 1 : 0, nil)
+        completion(supportedBiometrics != BiometricsType.none, nil)
     }
 
 

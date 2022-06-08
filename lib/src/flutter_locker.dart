@@ -32,9 +32,6 @@ class FlutterLocker {
   /// You need to provide a prompt for Android and iOS. Prompt for iOS is used only with TouchID. FaceID uses strings for Info.plist.
   static Future<String> retrieve(RetrieveSecretRequest request) async {
     return await _catchCommonError(() async {
-      // final String? secret = await _channel.invokeMethod();
-      // protos.ProtoMethodInterface.retrieveSecret.value.toString(), request.toProto().writeToBuffer());
-      // return secret ?? '';
       final _value = await _pigeonApi.retrieve(request);
       return _value;
     });
@@ -51,7 +48,8 @@ class FlutterLocker {
     try {
       return await function();
     } on PlatformException catch (exception) {
-      final lockerException = LockerException.fromCode(exception.code);
+      final lockerException = LockerException.fromCode(exception.message);
+      print('Locker exception: [${exception.message}] ${lockerException}');
       if (lockerException != null) {
         throw lockerException;
       } else {
