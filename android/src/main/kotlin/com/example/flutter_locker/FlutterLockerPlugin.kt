@@ -4,13 +4,15 @@ import android.app.Activity
 import android.content.Context
 import androidx.fragment.app.FragmentActivity
 import co.infinum.goldfinger.Goldfinger
+import io.flutter.BuildConfig
+import io.flutter.Log
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
-import kotlin.Exception
+import io.flutter.plugin.common.FlutterException
 
 /** FlutterLockerPlugin */
-public class FlutterLockerPlugin : FlutterPlugin, ActivityAware, FlutterLocker.PigeonApi {
+class FlutterLockerPlugin : FlutterPlugin, ActivityAware, FlutterLocker.PigeonApi {
   private lateinit var activity: Activity
   private lateinit var goldfinger: Goldfinger
 
@@ -37,7 +39,7 @@ public class FlutterLockerPlugin : FlutterPlugin, ActivityAware, FlutterLocker.P
       }
 
       override fun onError(e: Exception) {
-        result?.error(Exception("Failed to save secret: ${e.message}"))
+        result?.error(LockerException("-1", "Failed to save secret: ${e.message}", null))
       }
     })
   }
@@ -64,14 +66,16 @@ public class FlutterLockerPlugin : FlutterPlugin, ActivityAware, FlutterLocker.P
 
         override fun onError(e: Exception) {
           result?.error(
-            Exception(
-              e.toString()
+            LockerException(
+              "0",
+              e.toString(),
+              e.stackTrace,
             )
           )
         }
       })
     } ?: kotlin.run {
-      result?.error(Exception("Secret not found for that key"))
+      result?.error(LockerException("0", "Secret not found for that key", null))
     }
   }
 
@@ -87,11 +91,11 @@ public class FlutterLockerPlugin : FlutterPlugin, ActivityAware, FlutterLocker.P
     result: FlutterLocker.Result<T>?
   ) {
     if (goldfingerResult.reason() == Goldfinger.Reason.NEGATIVE_BUTTON || goldfingerResult.reason() == Goldfinger.Reason.CANCELED || goldfingerResult.reason() == Goldfinger.Reason.USER_CANCELED) {
-      result?.error(Exception("Authentication canceled: ${goldfingerResult.message()}"))
+      result?.error(LockerException("1", "Authentication canceled: ${goldfingerResult.message()}", goldfingerResult.reason()))
     } else if (goldfingerResult.reason() == Goldfinger.Reason.LOCKOUT_PERMANENT || goldfingerResult.reason() == Goldfinger.Reason.LOCKOUT) {
-      result?.error(Exception("Authentication failed: ${goldfingerResult.message()}"))
+      result?.error(LockerException("2", "Authentication failed: ${goldfingerResult.message()}", goldfingerResult.reason()))
     } else {
-      result?.error(Exception("Error: ${goldfingerResult.message()}"))
+      result?.error(LockerException("-1", "Error: ${goldfingerResult.message()}", goldfingerResult.reason()))
     }
   }
 

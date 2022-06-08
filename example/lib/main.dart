@@ -72,7 +72,7 @@ class _MyAppState extends State<MyApp> {
 
   void _showErrorMessage(Exception exception) {
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Something went wrong: $exception'), duration: Duration(days: 1)),
+      SnackBar(content: Text('Something went wrong: $exception'), duration: Duration(seconds: 1)),
     );
   }
 
