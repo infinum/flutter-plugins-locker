@@ -75,3 +75,4 @@ class MainActivity: FlutterFragmentActivity() {
 
 When showing authentication prompt, the app might crash on some Samsung devices if you don't use an appropriate theme: https://github.com/infinum/flutter-plugins-locker/commit/fcb1f6401d89f860d24ea9a75027d62a03e87926.
 
+

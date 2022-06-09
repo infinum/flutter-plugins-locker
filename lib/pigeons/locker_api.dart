@@ -1,5 +1,8 @@
 import 'package:pigeon/pigeon.dart';
 
+/// Command to generate all files:
+/// flutter pub run pigeon --input lib/pigeons/locker_api.dart --dart_out lib/gen/locker_api.gen.dart --objc_header_out ios/Classes/flutter_locker.h --objc_source_out ios/Classes/flutter_locker.m --java_out ./android/src/main/java/com/example/flutter_locker/FlutterLocker.java --java_package “com.example.flutter_locker”
+
 /// Data structure for retrieving the saved secret
 class RetrieveSecretRequest {
   RetrieveSecretRequest(this.key, this.androidPrompt, this.iOsPrompt);
@@ -22,11 +25,11 @@ class SaveSecretRequest {
 ///
 /// title and cancel are required.
 class AndroidPrompt {
-  AndroidPrompt(this.title, this.cancelLabel, {this.description});
+  AndroidPrompt(this.title, this.cancelLabel, {this.descriptionLabel});
 
   final String title;
   final String cancelLabel;
-  final String? description;
+  final String? descriptionLabel;
 }
 
 /// The iOS native dialog is only shown when retrieving secret.

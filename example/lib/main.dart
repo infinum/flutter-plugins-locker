@@ -32,7 +32,7 @@ class _MyAppState extends State<MyApp> {
     try {
       await FlutterLocker.save(
         SaveSecretRequest(
-            key: key, secret: secret, androidPrompt: AndroidPrompt(title: 'Authenticate', cancelLabel: 'Cancel')),
+            key: key, secret: secret, androidPrompt: AndroidPrompt(title: 'Authenticate', cancelLabel: 'Cancel', descriptionLabel: 'Please authenticate')),
       );
 
       _showMessage('Secret saved, secret: $secret');
@@ -45,7 +45,7 @@ class _MyAppState extends State<MyApp> {
     try {
       final retrieved = await FlutterLocker.retrieve(RetrieveSecretRequest(
           key: key,
-          androidPrompt: AndroidPrompt(title: 'Authenticate', cancelLabel: 'Cancel'),
+          androidPrompt: AndroidPrompt(title: 'Authenticate', cancelLabel: 'Cancel', descriptionLabel: 'Please authenticate'),
           iOsPrompt: IOsPrompt(touchIdText: 'Authenticate')));
 
       _showMessage('Secret retrieved, secret: $retrieved');

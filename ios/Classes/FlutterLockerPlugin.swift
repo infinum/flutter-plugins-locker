@@ -13,7 +13,7 @@ public class FlutterLockerPlugin: NSObject, PigeonApi, FlutterPlugin {
         Locker.setSecret(request.secret, for: request.key)
         // This can never fail
         Locker.setShouldUseAuthenticationWithBiometrics(true, for: request.key)
-        completion(nil, nil)
+        completion(true, nil)
     }
 
     public func retrieveRequest(_ request: RetrieveSecretRequest, completion: @escaping (String?, FlutterError?) -> Void) {

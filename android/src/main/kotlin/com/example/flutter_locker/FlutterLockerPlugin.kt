@@ -23,7 +23,7 @@ class FlutterLockerPlugin : FlutterPlugin, ActivityAware, FlutterLocker.PigeonAp
   override fun save(request: FlutterLocker.SaveSecretRequest, result: FlutterLocker.Result<Boolean>?) {
     val prompt = Goldfinger.PromptParams.Builder(activity as FragmentActivity)
       .title(request.androidPrompt.title)
-      .description(request.androidPrompt.description)
+      .description(request.androidPrompt.descriptionLabel)
       .negativeButtonText(request.androidPrompt.cancelLabel)
       .build()
 
@@ -47,7 +47,7 @@ class FlutterLockerPlugin : FlutterPlugin, ActivityAware, FlutterLocker.PigeonAp
   override fun retrieve(request: FlutterLocker.RetrieveSecretRequest, result: FlutterLocker.Result<String>?) {
     val prompt = Goldfinger.PromptParams.Builder(activity as FragmentActivity)
       .title(request.androidPrompt.title)
-      .description(request.androidPrompt.description)
+      .description(request.androidPrompt.descriptionLabel)
       .negativeButtonText(request.androidPrompt.cancelLabel)
       .build()
 
