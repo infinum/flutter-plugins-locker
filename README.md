@@ -10,6 +10,21 @@ Flutter plugin that secures your secrets in keychain using biometric authenticat
 It uses:
  - Locker on iOS (https://github.com/infinum/Locker)
  - Goldfinger on Android (https://github.com/infinum/Android-Goldfinger)
+
+## Migrate to 2.1.4
+
+The models now accept named parameters instead of unnamed, e.g.:
+
+```
+RetrieveSecretRequest(
+   key: key,
+   androidPrompt: AndroidPrompt(
+      title: title,
+      cancelLabel: cancel,
+      descriptionLabel: description,
+   ),
+   iOsPrompt: IOsPrompt(touchIdText: description),
+```
  
 ## Usage
 
