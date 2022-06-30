@@ -16,11 +16,6 @@ class FlutterLocker {
   /// On Android prompt is shown, while on iOS there is no need for the prompt when saving.
   static Future<void> save(SaveSecretRequest request) async {
     await _catchCommonError(() async {
-      // await _channel.invokeMethod<void>(
-      //   // protos.ProtoMethodInterface.saveSecret.value.toString(),
-      //   // request.toProto().writeToBuffer(),
-      // );
-
       await _pigeonApi.save(request);
 
       return '';
@@ -39,8 +34,6 @@ class FlutterLocker {
 
   /// Deletes the key.
   static Future<void> delete(String key) async {
-    // final request = protos.ProtoDeleteRequest()..key = key;
-    // await _channel.invokeMethod<void>(ProtoMethodInterface.deleteSecret.value.toString(), request.writeToBuffer());
     await _pigeonApi.delete(key);
   }
 

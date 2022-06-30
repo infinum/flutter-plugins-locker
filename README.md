@@ -11,7 +11,7 @@ It uses:
  - Locker on iOS (https://github.com/infinum/Locker)
  - Goldfinger on Android (https://github.com/infinum/Android-Goldfinger)
 
-## Migrate to 2.1.4
+## Migrate to 2.1.0
 
 The models now accept named parameters instead of unnamed, e.g.:
 
@@ -27,11 +27,6 @@ RetrieveSecretRequest(
 ```
  
 ## Usage
-
-Pigeon generation:
-```bash
-flutter pub run pigeon --input lib/pigeons/locker_api.dart --dart_out lib/gen/locker_api.gen.dart --objc_header_out ios/Classes/flutter_locker.h --objc_source_out ios/Classes/flutter_locker.m --java_out ./android/src/main/java/com/example/flutter_locker/FlutterLocker.java --java_package "com.example.flutter_locker"
-```
 
 ```dart
 FlutterLocker.canAuthenticate()
@@ -95,3 +90,9 @@ class MainActivity: FlutterFragmentActivity() {
 When showing authentication prompt, the app might crash on some Samsung devices if you don't use an appropriate theme: https://github.com/infinum/flutter-plugins-locker/commit/fcb1f6401d89f860d24ea9a75027d62a03e87926.
 
 
+### Updating pigeon files
+
+Pigeon generation:
+```bash
+flutter pub run pigeon --input lib/pigeons/locker_api.dart --dart_out lib/gen/locker_api.gen.dart --objc_header_out ios/Classes/flutter_locker.h --objc_source_out ios/Classes/flutter_locker.m --java_out ./android/src/main/java/com/example/flutter_locker/FlutterLocker.java --java_package "com.example.flutter_locker"
+```
