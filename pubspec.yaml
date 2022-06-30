@@ -18,6 +18,7 @@ dev_dependencies:
 
   pigeon: ^3.2.3
   build_runner: ^2.1.11
+  flutter_lints: ^2.0.1
 
 flutter:
   plugin:
