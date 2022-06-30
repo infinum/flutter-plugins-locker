@@ -11,12 +11,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  pigeon: ^3.2.3
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
+  pigeon: ^3.1.5
   build_runner: ^2.1.11
   flutter_lints: ^2.0.1
 
