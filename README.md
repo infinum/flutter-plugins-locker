@@ -10,9 +10,23 @@ Flutter plugin that secures your secrets in keychain using biometric authenticat
 It uses:
  - Locker on iOS (https://github.com/infinum/Locker)
  - Goldfinger on Android (https://github.com/infinum/Android-Goldfinger)
+
+## Migrate to 2.1.0
+
+The models now accept named parameters instead of unnamed, e.g.:
+
+```
+RetrieveSecretRequest(
+   key: key,
+   androidPrompt: AndroidPrompt(
+      title: title,
+      cancelLabel: cancel,
+      descriptionLabel: description,
+   ),
+   iOsPrompt: IOsPrompt(touchIdText: description),
+```
  
 ## Usage
-
 
 ```dart
 FlutterLocker.canAuthenticate()
@@ -84,3 +98,9 @@ When showing authentication prompt, the app might crash on some Samsung devices 
   </a>
 </p>
 
+### Updating pigeon files
+
+Pigeon generation:
+```bash
+flutter pub run pigeon --input lib/pigeons/locker_api.dart --dart_out lib/gen/locker_api.gen.dart --objc_header_out ios/Classes/flutter_locker.h --objc_source_out ios/Classes/flutter_locker.m --java_out ./android/src/main/java/com/example/flutter_locker/FlutterLocker.java --java_package "com.example.flutter_locker"
+```

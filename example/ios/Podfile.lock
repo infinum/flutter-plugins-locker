@@ -3,9 +3,7 @@ PODS:
   - flutter_locker (0.0.1):
     - Flutter
     - Locker (~> 3.0.1)
-    - SwiftProtobuf (~> 1.4)
   - Locker (3.0.1)
-  - SwiftProtobuf (1.19.0)
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
@@ -14,7 +12,6 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Locker
-    - SwiftProtobuf
 
 EXTERNAL SOURCES:
   Flutter:
@@ -24,9 +21,8 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
-  flutter_locker: e93c851e0c703bfe5ba53c2279773dece525713a
+  flutter_locker: 2d1b2e426eecaff7999596ff6cae78e1659e72df
   Locker: f1fae5dc8bee61b2c8cbca3fbbb23b6eab459af1
-  SwiftProtobuf: 6ef3f0e422ef90d6605ca20b21a94f6c1324d6b3
 
 PODFILE CHECKSUM: 21b64fbb12492d731c9be90cbe0f2d328bef4b49
 

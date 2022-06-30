@@ -9,15 +9,12 @@ class LockerException implements Exception {
   final LockerExceptionReason reason;
 
   static LockerException? fromCode(String? code) {
-    if (code == ProtoLockerError.secretNotFound.value.toString()) {
+    if (code == LockerExceptionReason.secretNotFound.index.toString()) {
       return LockerException(reason: LockerExceptionReason.secretNotFound);
-    } else if (code ==
-        ProtoLockerError.authenticationCanceled.value.toString()) {
-      return LockerException(
-          reason: LockerExceptionReason.authenticationCanceled);
-    } else if (code == ProtoLockerError.authenticationFailed.value.toString()) {
-      return LockerException(
-          reason: LockerExceptionReason.authenticationFailed);
+    } else if (code == LockerExceptionReason.authenticationCanceled.index.toString()) {
+      return LockerException(reason: LockerExceptionReason.authenticationCanceled);
+    } else if (code == LockerExceptionReason.authenticationFailed.index.toString()) {
+      return LockerException(reason: LockerExceptionReason.authenticationFailed);
     } else {
       return null;
     }

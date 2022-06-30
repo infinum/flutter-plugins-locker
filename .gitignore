@@ -478,3 +478,5 @@ Thumbs.db
 !/gradle/wrapper/gradle-wrapper.jar
 
 # End of https://www.gitignore.io/api/java,swift,xcode,macos,gradle,kotlin,flutter,appcode,android,cocoapods,objective-c,androidstudio,visualstudiocode
+
+.fvm/
