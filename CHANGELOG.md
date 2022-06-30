@@ -1,5 +1,9 @@
+## 2.1.0+1
+* Remove pigeon as dependency
+* Decrease flutter version
+
 ## 2.1.0
-* BREAKING: Models now accept named parameters instead of unnamed ones. Migration guide is in README## 1.0.0
+* BREAKING: Models now accept named parameters instead of unnamed ones. Migration guide is in README
 
 ## 2.0.4
 * Support building for Android on Apple M1 Macs
