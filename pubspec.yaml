@@ -1,12 +1,12 @@
 name: flutter_locker
 description: Secures your secrets in keychain using biometric authentication (Fingerprint, Touch ID, Face ID...)
-version: 2.1.0+1
+version: 2.1.1
 repository: https://github.com/infinum/flutter-plugins-locker
 homepage: https://github.com/infinum/flutter-plugins-locker
 
 environment:
   sdk: '>=2.16.0 <3.0.0'
-  flutter: ">=1.17.0"
+  flutter: '>=2.0.0'
 
 dependencies:
   flutter:
@@ -16,8 +16,8 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  pigeon: ^3.1.5
-  build_runner: ^2.1.11
+  pigeon: ^4.2.5
+  build_runner: ^2.3.2
   flutter_lints: ^2.0.1
 
 flutter:

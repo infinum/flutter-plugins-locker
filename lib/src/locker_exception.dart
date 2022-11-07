@@ -11,10 +11,14 @@ class LockerException implements Exception {
   static LockerException? fromCode(String? code) {
     if (code == LockerExceptionReason.secretNotFound.index.toString()) {
       return LockerException(reason: LockerExceptionReason.secretNotFound);
-    } else if (code == LockerExceptionReason.authenticationCanceled.index.toString()) {
-      return LockerException(reason: LockerExceptionReason.authenticationCanceled);
-    } else if (code == LockerExceptionReason.authenticationFailed.index.toString()) {
-      return LockerException(reason: LockerExceptionReason.authenticationFailed);
+    } else if (code ==
+        LockerExceptionReason.authenticationCanceled.index.toString()) {
+      return LockerException(
+          reason: LockerExceptionReason.authenticationCanceled);
+    } else if (code ==
+        LockerExceptionReason.authenticationFailed.index.toString()) {
+      return LockerException(
+          reason: LockerExceptionReason.authenticationFailed);
     } else {
       return null;
     }
