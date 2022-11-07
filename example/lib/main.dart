@@ -3,15 +3,16 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_locker/flutter_locker.dart';
-import 'package:flutter_locker/gen/locker_api.gen.dart';
 
 void main() {
-  runApp(MaterialApp(home: Scaffold(body: MyApp())));
+  runApp(const MaterialApp(home: Scaffold(body: MyApp())));
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
-  _MyAppState createState() => _MyAppState();
+  State createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
@@ -32,7 +33,12 @@ class _MyAppState extends State<MyApp> {
     try {
       await FlutterLocker.save(
         SaveSecretRequest(
-            key: key, secret: secret, androidPrompt: AndroidPrompt(title: 'Authenticate', cancelLabel: 'Cancel', descriptionLabel: 'Please authenticate')),
+            key: key,
+            secret: secret,
+            androidPrompt: AndroidPrompt(
+                title: 'Authenticate',
+                cancelLabel: 'Cancel',
+                descriptionLabel: 'Please authenticate')),
       );
 
       _showMessage('Secret saved, secret: $secret');
@@ -45,7 +51,10 @@ class _MyAppState extends State<MyApp> {
     try {
       final retrieved = await FlutterLocker.retrieve(RetrieveSecretRequest(
           key: key,
-          androidPrompt: AndroidPrompt(title: 'Authenticate', cancelLabel: 'Cancel', descriptionLabel: 'Please authenticate'),
+          androidPrompt: AndroidPrompt(
+              title: 'Authenticate',
+              cancelLabel: 'Cancel',
+              descriptionLabel: 'Please authenticate'),
           iOsPrompt: IOsPrompt(touchIdText: 'Authenticate')));
 
       _showMessage('Secret retrieved, secret: $retrieved');
@@ -72,7 +81,10 @@ class _MyAppState extends State<MyApp> {
 
   void _showErrorMessage(Exception exception) {
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Something went wrong: $exception'), duration: Duration(seconds: 1)),
+      SnackBar(
+        content: Text('Something went wrong: $exception'),
+        duration: const Duration(seconds: 1),
+      ),
     );
   }
 
@@ -81,32 +93,32 @@ class _MyAppState extends State<MyApp> {
     return SafeArea(
       child: Column(
         children: <Widget>[
-          SizedBox(height: 100),
-          Center(
+          const SizedBox(height: 100),
+          const Center(
             child: Text(
               'Locker example',
               style: TextStyle(fontSize: 24),
             ),
           ),
-          SizedBox(height: 40),
+          const SizedBox(height: 40),
           CupertinoButton.filled(
-            child: Text('Can authenticate'),
             onPressed: _canAuthenticate,
+            child: const Text('Can authenticate'),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           CupertinoButton.filled(
-            child: Text('Save secret'),
             onPressed: _saveSecret,
+            child: const Text('Save secret'),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           CupertinoButton.filled(
-            child: Text('Retrieve secret'),
             onPressed: _retrieveSecret,
+            child: const Text('Retrieve secret'),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           CupertinoButton.filled(
-            child: Text('Delete secret'),
             onPressed: _deleteSecret,
+            child: const Text('Delete secret'),
           )
         ],
       ),
