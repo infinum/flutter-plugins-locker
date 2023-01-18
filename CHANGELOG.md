@@ -1,3 +1,7 @@
+## 2.1.2
+
+- Fixed incorrect LockerException being return
+
 ## 2.1.1
 
 - Migrate android dependencies to mavenCentral from jcenter
