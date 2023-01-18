@@ -43,7 +43,7 @@ class FlutterLocker {
     try {
       return await function();
     } on PlatformException catch (exception) {
-      final lockerException = LockerException.fromCode(exception.message);
+      final lockerException = LockerException.fromCode(exception.code);
       // ignore: avoid_print
       print('Locker exception: [${exception.message}] $lockerException');
       if (lockerException != null) {
