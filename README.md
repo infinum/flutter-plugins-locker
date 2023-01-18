@@ -15,7 +15,7 @@ It uses:
 
 The models now accept named parameters instead of unnamed, e.g.:
 
-```
+```dart
 RetrieveSecretRequest(
    key: key,
    androidPrompt: AndroidPrompt(
@@ -28,26 +28,36 @@ RetrieveSecretRequest(
  
 ## Usage
 
+To check if the devices has biometric features:
+
 ```dart
 FlutterLocker.canAuthenticate()
 ```
-Checks if the devices has biometric features
 
+To save the secret:
 ```dart
-FlutterLocker.save(SaveSecretRequest(key, secret, AndroidPrompt("Authenticate", "Cancel")))
+FlutterLocker.save(SaveSecretRequest(
+   key: "key",
+   secret: "secret",
+   androidPrompt: AndroidPrompt(title: "Authenticate", cancelLabel: "Cancel"),
+));
 ``` 
-Saves the secret. On Android prompt is shown, while on iOS there is no need for the prompt when saving.
+On Android a prompt is shown, while on iOS there is no need for the prompt when saving.
 
+To retrieve the secret:
 ```dart
-FlutterLocker.retrieve(RetrieveSecretRequest(key, AndroidPrompt('Authenticate', 'Cancel'), IOsPrompt('Authenticate')))
+FlutterLocker.retrieve(RetrieveSecretRequest(
+   key: "key",
+   androidPrompt: AndroidPrompt(title: "Authenticate", cancelLabel: "Cancel"),
+   iOsPrompt: IOsPrompt(touchIdText: "Authenticate"),
+));
 ```
-Retrieves the secret. You need to provide a prompt for Android and iOS. Prompt for iOS is used only with TouchID. FaceID uses strings from `Info.plist`.
+You need to provide a prompt for Android and iOS. The prompt for iOS is used only with TouchID, FaceID uses strings from `Info.plist`.
 
+To delete the key:
 ```dart
-FlutterLocker.delete(key)
+FlutterLocker.delete(key);
 ```
-Deletes the key.
-
 
 ## Exceptions
 
@@ -55,9 +65,9 @@ For common exceptions, a `LockerException` is thrown.
 
 Use `LockerException.reason` to find out what went wrong: 
 
-- secretNotFound - Happens when you try to retrieve a secret that was never saved for that key
-- authenticationCanceled - User canceled the authentication prompt
-- authenticationFailed - User failed authentication, e.g. by too many wrong attempts
+- `secretNotFound` - Happens when you try to retrieve a secret that was never saved for that key
+- `authenticationCanceled` - User canceled the authentication prompt
+- `authenticationFailed` - User failed authentication, e.g. by too many wrong attempts
 
 For other exception, a `PlatformException` is thrown. You can use `PlatformException.message` to get more info.
  
