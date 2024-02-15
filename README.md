@@ -24,6 +24,7 @@ RetrieveSecretRequest(
       descriptionLabel: description,
    ),
    iOsPrompt: IOsPrompt(touchIdText: description),
+)
 ```
  
 ## Usage
@@ -55,9 +56,9 @@ For common exceptions, a `LockerException` is thrown.
 
 Use `LockerException.reason` to find out what went wrong: 
 
-- secretNotFound - Happens when you try to retrieve a secret that was never saved for that key
-- authenticationCanceled - User canceled the authentication prompt
-- authenticationFailed - User failed authentication, e.g. by too many wrong attempts
+- `secretNotFound` - Happens when you try to retrieve a secret that was never saved for that key
+- `authenticationCanceled` - User canceled the authentication prompt
+- `authenticationFailed` - User failed authentication, e.g. by too many wrong attempts
 
 For other exception, a `PlatformException` is thrown. You can use `PlatformException.message` to get more info.
  
@@ -97,10 +98,3 @@ When showing authentication prompt, the app might crash on some Samsung devices 
     </picture>
   </a>
 </p>
-
-### Updating pigeon files
-
-Pigeon generation:
-```bash
-flutter pub run pigeon --input pigeons/locker_api.dart --dart_out lib/gen/locker_api.gen.dart --objc_header_out ios/Classes/flutter_locker.h --objc_source_out ios/Classes/flutter_locker.m --java_out ./android/src/main/java/com/example/flutter_locker/FlutterLocker.java --java_package "com.example.flutter_locker"
-```
