@@ -2,54 +2,54 @@ import Flutter
 import UIKit
 import Locker
 
+extension FlutterError: Error {}
+
 public class FlutterLockerPlugin: NSObject, PigeonApi, FlutterPlugin {
-    public func canAuthenticate(completion: @escaping (NSNumber?, FlutterError?) -> Void) {
+    func canAuthenticate(completion: @escaping (Result<Bool, Error>) -> Void) {
         let supportedBiometrics = Locker.configuredBiometricsAuthentication
-        completion(supportedBiometrics != BiometricsType.none ? true : false, nil)
+        completion(.success(supportedBiometrics != BiometricsType.none ? true : false))
     }
-
-
-    public func save(_ request: SaveSecretRequest, completion: @escaping (NSNumber?, FlutterError?) -> Void) {
+    
+    func save(request: SaveSecretRequest, completion: @escaping (Result<Void, Error>) -> Void) {
         Locker.setSecret(request.secret, for: request.key)
         // This can never fail
         Locker.setShouldUseAuthenticationWithBiometrics(true, for: request.key)
-        completion(true, nil)
+        completion(.success(Void()))
     }
-
-    public func retrieveRequest(_ request: RetrieveSecretRequest, completion: @escaping (String?, FlutterError?) -> Void) {
-       Locker.retrieveCurrentSecret(
-           for: request.key,
-           operationPrompt: request.iOsPrompt.touchIdText,
-           success: { (secret) in
-               completion(secret, nil)
-           },
-           failure: { (failureStatus) in
-               var code: Int = -1;
-               
-               switch failureStatus {
-               case errSecItemNotFound:
-                   code = 0
-               case errSecAuthFailed:
-                   code = 1
-               case errSecUserCanceled:
-                   code = 2
-               default:
-                   code = Int(failureStatus)
-               }
-               
-               completion(nil, FlutterError(code: String(code), message: "Security error: " + failureStatus.description, details: nil))
-           })
+    
+    func retrieve(request: RetrieveSecretRequest, completion: @escaping (Result<String, Error>) -> Void) {
+        Locker.retrieveCurrentSecret(
+            for: request.key,
+            operationPrompt: request.iOsPrompt.touchIdText,
+            success: { (secret) in
+                completion(.success(secret))
+            },
+            failure: { (failureStatus) in
+                var code: String;
+                
+                switch failureStatus {
+                case errSecItemNotFound:
+                    code = "0"
+                case errSecUserCanceled:
+                    code = "1"
+                case errSecAuthFailed:
+                    code = "2"
+                default:
+                    code = "-1"
+                }
+                
+                completion(.failure(FlutterError(code: code, message: failureStatus.description, details: nil)))
+            })
     }
-
-
-    public func deleteKey(_ key: String, completion: @escaping (FlutterError?) -> Void) {
+    
+    func delete(key: String, completion: @escaping (Result<Void, Error>) -> Void) {
         Locker.deleteSecret(for: key)
-        completion(nil);
+        completion(.success(Void()))
     }
     
   public static func register(with registrar: FlutterPluginRegistrar) {
       let instance = FlutterLockerPlugin()
-      PigeonApiSetup(registrar.messenger(), instance)
+      PigeonApiSetup.setUp(binaryMessenger: registrar.messenger(), api: instance)
   }
 
   public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {

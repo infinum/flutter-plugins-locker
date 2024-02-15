@@ -1,7 +1,17 @@
 import 'package:pigeon/pigeon.dart';
 
-/// Command to generate all files:
-/// flutter pub run pigeon --input lib/pigeons/locker_api.dart --dart_out lib/gen/locker_api.gen.dart --objc_header_out ios/Classes/flutter_locker.h --objc_source_out ios/Classes/flutter_locker.m --java_out ./android/src/main/java/com/example/flutter_locker/FlutterLocker.java --java_package “com.example.flutter_locker”
+/// Run pigeon:
+/// dart run pigeon --input pigeons/locker_api.dart
+
+@ConfigurePigeon(PigeonOptions(
+  dartOut: 'lib/gen/locker_api.gen.dart',
+  swiftOut: 'ios/Classes/FlutterLocker.swift',
+  kotlinOut:
+      'android/src/main/kotlin/com/example/flutter_locker/FlutterLocker.kt',
+  kotlinOptions: KotlinOptions(
+    package: 'com.example.flutter_locker',
+  ),
+))
 
 /// Data structure for retrieving the saved secret
 class RetrieveSecretRequest {
@@ -48,7 +58,7 @@ abstract class PigeonApi {
   bool canAuthenticate();
 
   @async
-  bool save(SaveSecretRequest request);
+  void save(SaveSecretRequest request);
 
   @async
   String retrieve(RetrieveSecretRequest request);
