@@ -29,13 +29,13 @@ public class FlutterLockerPlugin: NSObject, PigeonApi, FlutterPlugin {
                 
                 switch failureStatus {
                 case errSecItemNotFound:
-                    code = "0"
+                    code = "secretNotFound"
                 case errSecUserCanceled:
-                    code = "1"
+                    code = "authenticationCanceled"
                 case errSecAuthFailed:
-                    code = "2"
+                    code = "authenticationFailed"
                 default:
-                    code = "-1"
+                    code = "other"
                 }
                 
                 completion(.failure(FlutterError(code: code, message: failureStatus.description, details: nil)))

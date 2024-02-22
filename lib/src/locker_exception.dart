@@ -10,12 +10,12 @@ class LockerException implements Exception {
 
   static LockerException? fromCode(String? code) {
     switch (code) {
-      case "0":
+      case "secretNotFound":
         return LockerException(reason: LockerExceptionReason.secretNotFound);
-      case "1":
+      case "authenticationCanceled":
         return LockerException(
             reason: LockerExceptionReason.authenticationCanceled);
-      case "2":
+      case "authenticationFailed":
         return LockerException(
             reason: LockerExceptionReason.authenticationFailed);
       default:

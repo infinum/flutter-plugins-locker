@@ -14,10 +14,10 @@ class FlutterLockerPlugin : FlutterPlugin, ActivityAware, PigeonApi {
   private lateinit var goldfinger: Goldfinger
 
   object ErrorCodes {
-    const val OTHER = "-1"
-    const val SECRET_NOT_FOUND = "0"
-    const val AUTHENTICATION_CANCELED = "1"
-    const val AUTHENTICATION_FAILED = "2"
+    const val OTHER = "other"
+    const val SECRET_NOT_FOUND = "secretNotFound"
+    const val AUTHENTICATION_CANCELED = "authenticationCanceled"
+    const val AUTHENTICATION_FAILED = "authenticationFailed"
   }
 
   override fun canAuthenticate(callback: (Result<Boolean>) -> Unit) {
