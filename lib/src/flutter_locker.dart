@@ -1,4 +1,4 @@
-part of flutter_locker;
+part of '../flutter_locker.dart';
 
 /// Flutter plugin that secures your secrets in keychain using biometric authentication.
 class FlutterLocker {
@@ -44,8 +44,6 @@ class FlutterLocker {
       return await function();
     } on PlatformException catch (exception) {
       final lockerException = LockerException.fromCode(exception.code);
-      // ignore: avoid_print
-      print('Locker exception: [${exception.message}] $lockerException');
       if (lockerException != null) {
         throw lockerException;
       } else {

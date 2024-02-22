@@ -1,4 +1,4 @@
-part of flutter_locker;
+part of '../flutter_locker.dart';
 
 /// Common exception that Locker recognizes on both platforms.
 ///
@@ -9,18 +9,17 @@ class LockerException implements Exception {
   final LockerExceptionReason reason;
 
   static LockerException? fromCode(String? code) {
-    if (code == LockerExceptionReason.secretNotFound.index.toString()) {
-      return LockerException(reason: LockerExceptionReason.secretNotFound);
-    } else if (code ==
-        LockerExceptionReason.authenticationCanceled.index.toString()) {
-      return LockerException(
-          reason: LockerExceptionReason.authenticationCanceled);
-    } else if (code ==
-        LockerExceptionReason.authenticationFailed.index.toString()) {
-      return LockerException(
-          reason: LockerExceptionReason.authenticationFailed);
-    } else {
-      return null;
+    switch (code) {
+      case "secretNotFound":
+        return LockerException(reason: LockerExceptionReason.secretNotFound);
+      case "authenticationCanceled":
+        return LockerException(
+            reason: LockerExceptionReason.authenticationCanceled);
+      case "authenticationFailed":
+        return LockerException(
+            reason: LockerExceptionReason.authenticationFailed);
+      default:
+        return null;
     }
   }
 

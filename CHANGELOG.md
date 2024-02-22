@@ -1,3 +1,7 @@
+## 2.1.3
+
+- Fixed LockerException not showing exception details
+
 ## 2.1.2
 
 - Fixed incorrect LockerException being return

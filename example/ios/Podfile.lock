@@ -20,10 +20,10 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_locker/ios"
 
 SPEC CHECKSUMS:
-  Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_locker: 2d1b2e426eecaff7999596ff6cae78e1659e72df
   Locker: f1fae5dc8bee61b2c8cbca3fbbb23b6eab459af1
 
-PODFILE CHECKSUM: 21b64fbb12492d731c9be90cbe0f2d328bef4b49
+PODFILE CHECKSUM: ce13d36744da294d67f8e460dbb7aed7c09bd7f4
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.13.0

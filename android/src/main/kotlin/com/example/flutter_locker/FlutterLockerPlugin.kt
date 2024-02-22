@@ -4,23 +4,27 @@ import android.app.Activity
 import android.content.Context
 import androidx.fragment.app.FragmentActivity
 import co.infinum.goldfinger.Goldfinger
-import io.flutter.BuildConfig
-import io.flutter.Log
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
-import io.flutter.plugin.common.FlutterException
 
 /** FlutterLockerPlugin */
-class FlutterLockerPlugin : FlutterPlugin, ActivityAware, FlutterLocker.PigeonApi {
+class FlutterLockerPlugin : FlutterPlugin, ActivityAware, PigeonApi {
   private lateinit var activity: Activity
   private lateinit var goldfinger: Goldfinger
 
-  override fun canAuthenticate(result: FlutterLocker.Result<Boolean>?) {
-    result?.success(goldfinger.canAuthenticate())
+  object ErrorCodes {
+    const val OTHER = "other"
+    const val SECRET_NOT_FOUND = "secretNotFound"
+    const val AUTHENTICATION_CANCELED = "authenticationCanceled"
+    const val AUTHENTICATION_FAILED = "authenticationFailed"
   }
 
-  override fun save(request: FlutterLocker.SaveSecretRequest, result: FlutterLocker.Result<Boolean>?) {
+  override fun canAuthenticate(callback: (Result<Boolean>) -> Unit) {
+    callback(Result.success(goldfinger.canAuthenticate()))
+  }
+
+  override fun save(request: SaveSecretRequest, callback: (Result<Unit>) -> Unit) {
     val prompt = Goldfinger.PromptParams.Builder(activity as FragmentActivity)
       .title(request.androidPrompt.title)
       .description(request.androidPrompt.descriptionLabel)
@@ -32,19 +36,20 @@ class FlutterLockerPlugin : FlutterPlugin, ActivityAware, FlutterLocker.PigeonAp
         if (goldfingerResult.type() == Goldfinger.Type.SUCCESS) {
           activity.getPreferences(Context.MODE_PRIVATE).edit()
             .putString(request.key.toPrefsKey(), goldfingerResult.value()).apply()
-          result?.success(true)
+          callback(Result.success(Unit))
         } else if (goldfingerResult.type() == Goldfinger.Type.ERROR) {
-          handleGoldfingerError(goldfingerResult, result)
+          val error = FlutterError(reasonToErrorCode(goldfingerResult.reason()), goldfingerResult.message())
+          callback(Result.failure(error))
         }
       }
 
       override fun onError(e: Exception) {
-        result?.error(LockerException("-1", "Failed to save secret: ${e.message}", null))
+        callback(Result.failure(FlutterError(ErrorCodes.OTHER, e.message)))
       }
     })
   }
 
-  override fun retrieve(request: FlutterLocker.RetrieveSecretRequest, result: FlutterLocker.Result<String>?) {
+  override fun retrieve(request: RetrieveSecretRequest, callback: (Result<String>) -> Unit) {
     val prompt = Goldfinger.PromptParams.Builder(activity as FragmentActivity)
       .title(request.androidPrompt.title)
       .description(request.androidPrompt.descriptionLabel)
@@ -58,44 +63,40 @@ class FlutterLockerPlugin : FlutterPlugin, ActivityAware, FlutterLocker.PigeonAp
       goldfinger.decrypt(prompt, request.key, it, object : Goldfinger.Callback {
         override fun onResult(goldfingerResult: Goldfinger.Result) {
           if (goldfingerResult.type() == Goldfinger.Type.SUCCESS) {
-            result?.success(goldfingerResult.value())
+            callback(Result.success(goldfingerResult.value() as String))
           } else if (goldfingerResult.type() == Goldfinger.Type.ERROR) {
-            handleGoldfingerError(goldfingerResult, result)
+            val error = FlutterError(reasonToErrorCode(goldfingerResult.reason()), goldfingerResult.message())
+            callback(Result.failure(error))
           }
         }
 
         override fun onError(e: Exception) {
-          result?.error(
-            LockerException(
-              "0",
-              e.toString(),
-              e.stackTrace,
-            )
-          )
+          val error = FlutterError(ErrorCodes.SECRET_NOT_FOUND)
+          callback(Result.failure(error))
         }
       })
     } ?: kotlin.run {
-      result?.error(LockerException("0", "Secret not found for that key", null))
+      val error = FlutterError(ErrorCodes.SECRET_NOT_FOUND)
+      callback(Result.failure(error))
     }
   }
 
-  override fun delete(key: String, result: FlutterLocker.Result<Void>?) {
-    activity.getPreferences(Context.MODE_PRIVATE).edit().remove(key.toPrefsKey())
-      .apply()
-
-    result?.success(null)
+  override fun delete(key: String, callback: (Result<Unit>) -> Unit) {
+    activity.getPreferences(Context.MODE_PRIVATE).edit().remove(key.toPrefsKey()).apply()
+    callback(Result.success(Unit))
   }
 
-  private fun <T> handleGoldfingerError(
-    goldfingerResult: Goldfinger.Result,
-    result: FlutterLocker.Result<T>?
-  ) {
-    if (goldfingerResult.reason() == Goldfinger.Reason.NEGATIVE_BUTTON || goldfingerResult.reason() == Goldfinger.Reason.CANCELED || goldfingerResult.reason() == Goldfinger.Reason.USER_CANCELED) {
-      result?.error(LockerException("1", "Authentication canceled: ${goldfingerResult.message()}", goldfingerResult.reason()))
-    } else if (goldfingerResult.reason() == Goldfinger.Reason.LOCKOUT_PERMANENT || goldfingerResult.reason() == Goldfinger.Reason.LOCKOUT) {
-      result?.error(LockerException("2", "Authentication failed: ${goldfingerResult.message()}", goldfingerResult.reason()))
-    } else {
-      result?.error(LockerException("-1", "Error: ${goldfingerResult.message()}", goldfingerResult.reason()))
+  private fun reasonToErrorCode(reason: Goldfinger.Reason): String {
+    return when (reason) {
+        Goldfinger.Reason.NEGATIVE_BUTTON, Goldfinger.Reason.CANCELED, Goldfinger.Reason.USER_CANCELED -> {
+          ErrorCodes.AUTHENTICATION_CANCELED
+        }
+        Goldfinger.Reason.LOCKOUT_PERMANENT, Goldfinger.Reason.LOCKOUT -> {
+          ErrorCodes.AUTHENTICATION_FAILED
+        }
+        else -> {
+          ErrorCodes.OTHER
+        }
     }
   }
 
@@ -103,7 +104,7 @@ class FlutterLockerPlugin : FlutterPlugin, ActivityAware, FlutterLocker.PigeonAp
   fun String.toPrefsKey(): String = "\$_flutter_locker_$this"
   override fun onAttachedToEngine(binding: FlutterPlugin.FlutterPluginBinding) {
     goldfinger = Goldfinger.Builder(binding.applicationContext).build()
-    FlutterLocker.PigeonApi.setup(binding.binaryMessenger, this)
+    PigeonApi.setUp(binding.binaryMessenger, this)
   }
 
   override fun onAttachedToActivity(binding: ActivityPluginBinding) {
