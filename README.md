@@ -15,40 +15,43 @@ It uses:
 
 The models now accept named parameters instead of unnamed, e.g.:
 
-```
+```dart
 RetrieveSecretRequest(
-   key: key,
-   androidPrompt: AndroidPrompt(
-      title: title,
-      cancelLabel: cancel,
-      descriptionLabel: description,
-   ),
-   iOsPrompt: IOsPrompt(touchIdText: description),
+  key: 'key',
+  androidPrompt: AndroidPrompt(title: 'title', cancelLabel: 'cancel'),
+  iOsPrompt: IOsPrompt(touchIdText: 'description'),
 )
 ```
  
 ## Usage
 
 ```dart
-FlutterLocker.canAuthenticate()
+FlutterLocker.canAuthenticate();
 ```
-Checks if the devices has biometric features
+Checks if the devices has biometric features.
 
 ```dart
-FlutterLocker.save(SaveSecretRequest(key, secret, AndroidPrompt("Authenticate", "Cancel")))
+await FlutterLocker.save(SaveSecretRequest(
+  key: 'key',
+  secret: 'secret',
+  androidPrompt: AndroidPrompt(title: 'Authenticate', cancelLabel: 'Cancel'),
+));
 ``` 
 Saves the secret. On Android prompt is shown, while on iOS there is no need for the prompt when saving.
 
 ```dart
-FlutterLocker.retrieve(RetrieveSecretRequest(key, AndroidPrompt('Authenticate', 'Cancel'), IOsPrompt('Authenticate')))
+await FlutterLocker.retrieve(RetrieveSecretRequest(
+  key: key,
+  androidPrompt: AndroidPrompt(title: 'Authenticate', cancelLabel: 'Cancel'),
+  iOsPrompt: IOsPrompt(touchIdText: 'Authenticate'),
+));
 ```
 Retrieves the secret. You need to provide a prompt for Android and iOS. Prompt for iOS is used only with TouchID. FaceID uses strings from `Info.plist`.
 
 ```dart
-FlutterLocker.delete(key)
+await FlutterLocker.delete('key');
 ```
-Deletes the key.
-
+Deletes the secret.
 
 ## Exceptions
 
