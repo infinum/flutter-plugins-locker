@@ -1,3 +1,7 @@
+## 2.1.4
+
+- Update dependencies
+
 ## 2.1.3
 
 - Fixed LockerException not showing exception details
