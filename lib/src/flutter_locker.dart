@@ -6,8 +6,8 @@ class FlutterLocker {
 
   static final PigeonApi _pigeonApi = PigeonApi();
 
-  /// Checks if the devices has biometric features
-  static Future<bool?> canAuthenticate() {
+  /// Checks if the devices has biometric features.
+  static Future<bool> canAuthenticate() {
     return _pigeonApi.canAuthenticate();
   }
 
@@ -32,7 +32,7 @@ class FlutterLocker {
     });
   }
 
-  /// Deletes the key.
+  /// Deletes the secret.
   static Future<void> delete(String key) async {
     await _pigeonApi.delete(key);
   }

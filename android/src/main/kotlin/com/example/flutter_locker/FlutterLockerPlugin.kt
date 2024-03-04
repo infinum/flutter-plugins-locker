@@ -2,6 +2,7 @@ package com.example.flutter_locker
 
 import android.app.Activity
 import android.content.Context
+import androidx.biometric.BiometricManager
 import androidx.fragment.app.FragmentActivity
 import co.infinum.goldfinger.Goldfinger
 import io.flutter.embedding.engine.plugins.FlutterPlugin
@@ -13,6 +14,8 @@ class FlutterLockerPlugin : FlutterPlugin, ActivityAware, PigeonApi {
   private lateinit var activity: Activity
   private lateinit var goldfinger: Goldfinger
 
+  private val authenticators = BiometricManager.Authenticators.BIOMETRIC_STRONG
+
   object ErrorCodes {
     const val OTHER = "other"
     const val SECRET_NOT_FOUND = "secretNotFound"
@@ -21,11 +24,12 @@ class FlutterLockerPlugin : FlutterPlugin, ActivityAware, PigeonApi {
   }
 
   override fun canAuthenticate(callback: (Result<Boolean>) -> Unit) {
-    callback(Result.success(goldfinger.canAuthenticate()))
+    callback(Result.success(goldfinger.canAuthenticate(authenticators)))
   }
 
   override fun save(request: SaveSecretRequest, callback: (Result<Unit>) -> Unit) {
     val prompt = Goldfinger.PromptParams.Builder(activity as FragmentActivity)
+      .allowedAuthenticators(authenticators)
       .title(request.androidPrompt.title)
       .description(request.androidPrompt.descriptionLabel)
       .negativeButtonText(request.androidPrompt.cancelLabel)
@@ -51,6 +55,7 @@ class FlutterLockerPlugin : FlutterPlugin, ActivityAware, PigeonApi {
 
   override fun retrieve(request: RetrieveSecretRequest, callback: (Result<String>) -> Unit) {
     val prompt = Goldfinger.PromptParams.Builder(activity as FragmentActivity)
+      .allowedAuthenticators(authenticators)
       .title(request.androidPrompt.title)
       .description(request.androidPrompt.descriptionLabel)
       .negativeButtonText(request.androidPrompt.cancelLabel)
@@ -108,7 +113,7 @@ class FlutterLockerPlugin : FlutterPlugin, ActivityAware, PigeonApi {
   }
 
   override fun onAttachedToActivity(binding: ActivityPluginBinding) {
-    activity = binding.activity;
+    activity = binding.activity
   }
 
   override fun onDetachedFromActivityForConfigChanges() {
@@ -116,7 +121,7 @@ class FlutterLockerPlugin : FlutterPlugin, ActivityAware, PigeonApi {
   }
 
   override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {
-    activity = binding.activity;
+    activity = binding.activity
   }
 
   override fun onDetachedFromActivity() {

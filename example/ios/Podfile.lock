@@ -2,8 +2,8 @@ PODS:
   - Flutter (1.0.0)
   - flutter_locker (0.0.1):
     - Flutter
-    - Locker (~> 3.0.1)
-  - Locker (3.0.1)
+    - Locker (~> 3.0.3)
+  - Locker (3.0.3)
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
@@ -21,8 +21,8 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
-  flutter_locker: 2d1b2e426eecaff7999596ff6cae78e1659e72df
-  Locker: f1fae5dc8bee61b2c8cbca3fbbb23b6eab459af1
+  flutter_locker: 24b555d985c1b49adeba9f371301c675e4208bfe
+  Locker: a0328965d13c0f8738b9c67ad5d61ac5ead9f467
 
 PODFILE CHECKSUM: ce13d36744da294d67f8e460dbb7aed7c09bd7f4
 
