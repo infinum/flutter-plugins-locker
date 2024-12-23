@@ -1,3 +1,8 @@
+## 2.1.5
+
+- Update dependencies
+- Android improvements
+
 ## 2.1.4
 
 - Update dependencies
