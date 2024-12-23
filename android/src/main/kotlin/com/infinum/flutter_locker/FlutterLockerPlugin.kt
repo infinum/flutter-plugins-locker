@@ -1,4 +1,4 @@
-package com.example.flutter_locker
+package com.infinum.flutter_locker
 
 import android.app.Activity
 import android.content.Context
