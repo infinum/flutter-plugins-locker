@@ -10,7 +10,7 @@ import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
 
 /** FlutterLockerPlugin */
-class FlutterLockerPlugin : FlutterPlugin, ActivityAware, PigeonApi {
+class FlutterLockerPlugin : FlutterPlugin, ActivityAware, FlutterLockerHostApi {
   private lateinit var activity: Activity
   private lateinit var goldfinger: Goldfinger
 
@@ -109,7 +109,7 @@ class FlutterLockerPlugin : FlutterPlugin, ActivityAware, PigeonApi {
   fun String.toPrefsKey(): String = "\$_flutter_locker_$this"
   override fun onAttachedToEngine(binding: FlutterPlugin.FlutterPluginBinding) {
     goldfinger = Goldfinger.Builder(binding.applicationContext).build()
-    PigeonApi.setUp(binding.binaryMessenger, this)
+    FlutterLockerHostApi.setUp(binding.binaryMessenger, this)
   }
 
   override fun onAttachedToActivity(binding: ActivityPluginBinding) {

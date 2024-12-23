@@ -16,9 +16,9 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  pigeon: ^17.0.0
-  build_runner: ^2.4.8
-  flutter_lints: ^3.0.1
+  pigeon: ^22.7.0
+  build_runner: ^2.4.14
+  flutter_lints: ^5.0.0
 
 flutter:
   plugin:

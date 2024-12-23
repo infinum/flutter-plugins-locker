@@ -4,7 +4,7 @@ import Locker
 
 extension FlutterError: Error {}
 
-public class FlutterLockerPlugin: NSObject, PigeonApi, FlutterPlugin {
+public class FlutterLockerPlugin: NSObject, FlutterLockerHostApi, FlutterPlugin {
     func canAuthenticate(completion: @escaping (Result<Bool, Error>) -> Void) {
         let supportedBiometrics = Locker.configuredBiometricsAuthentication
         completion(.success(supportedBiometrics != BiometricsType.none ? true : false))
@@ -49,7 +49,7 @@ public class FlutterLockerPlugin: NSObject, PigeonApi, FlutterPlugin {
     
   public static func register(with registrar: FlutterPluginRegistrar) {
       let instance = FlutterLockerPlugin()
-      PigeonApiSetup.setUp(binaryMessenger: registrar.messenger(), api: instance)
+      FlutterLockerHostApiSetup.setUp(binaryMessenger: registrar.messenger(), api: instance)
   }
 
   public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {

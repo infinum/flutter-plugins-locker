@@ -53,7 +53,7 @@ class IOsPrompt {
 }
 
 @HostApi()
-abstract class PigeonApi {
+abstract class FlutterLockerHostApi {
   @async
   bool canAuthenticate();
 
