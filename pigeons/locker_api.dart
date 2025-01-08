@@ -7,9 +7,9 @@ import 'package:pigeon/pigeon.dart';
   dartOut: 'lib/gen/locker_api.gen.dart',
   swiftOut: 'ios/Classes/FlutterLocker.swift',
   kotlinOut:
-      'android/src/main/kotlin/com/example/flutter_locker/FlutterLocker.kt',
+      'android/src/main/kotlin/com/infinum/flutter_locker/FlutterLocker.kt',
   kotlinOptions: KotlinOptions(
-    package: 'com.example.flutter_locker',
+    package: 'com.infinum.flutter_locker',
   ),
 ))
 
@@ -53,7 +53,7 @@ class IOsPrompt {
 }
 
 @HostApi()
-abstract class PigeonApi {
+abstract class FlutterLockerHostApi {
   @async
   bool canAuthenticate();
 
