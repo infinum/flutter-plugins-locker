@@ -1,0 +1,15 @@
+{
+  "originHash" : "0be3627628c1af82f0d9a51d1c5fc1433b6fd2bce529eed94e2a0cef2ce09613",
+  "pins" : [
+    {
+      "identity" : "locker",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/infinum/Locker.git",
+      "state" : {
+        "revision" : "6954ffe776d4adf929f470220729b4dbbda0aaa9",
+        "version" : "3.0.4"
+      }
+    }
+  ],
+  "version" : 3
+}

@@ -5,7 +5,7 @@ import 'package:pigeon/pigeon.dart';
 
 @ConfigurePigeon(PigeonOptions(
   dartOut: 'lib/gen/locker_api.gen.dart',
-  swiftOut: 'ios/Classes/FlutterLocker.swift',
+  swiftOut: 'ios/flutter_locker/Sources/flutter_locker/FlutterLocker.swift',
   kotlinOut:
       'android/src/main/kotlin/com/infinum/flutter_locker/FlutterLocker.kt',
   kotlinOptions: KotlinOptions(

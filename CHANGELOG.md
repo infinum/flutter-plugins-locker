@@ -1,3 +1,7 @@
+## 2.1.6
+
+- Swift Package Manager support
+
 ## 2.1.5
 
 - Update dependencies
