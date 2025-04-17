@@ -19,7 +19,13 @@ public class FlutterLockerPlugin: NSObject, FlutterLockerHostApi, FlutterPlugin 
     func save(request: SaveSecretRequest, completion: @escaping (Result<Void, Error>) -> Void) {
         // This can never fail
         Locker.setShouldUseAuthenticationWithBiometrics(true, for: request.key)
-        completion(.success(Void()))
+        Locker.setSecret(request.secret, for: request.key) { error in
+            if let error {
+                completion(.failure(error))
+            } else {
+                completion(.success(()))
+            }
+        }
     }
     
     func retrieve(request: RetrieveSecretRequest, completion: @escaping (Result<String, Error>) -> Void) {
