@@ -7,6 +7,11 @@ class FlutterLocker {
   static final FlutterLockerHostApi _hostApi = FlutterLockerHostApi();
 
   /// Checks if the devices has biometric features.
+  static Future<bool> supportsBiometricAuthentication() {
+    return _hostApi.supportsBiometricAuthentication();
+  }
+
+  /// Checks if the devices has biometric features.
   static Future<bool> canAuthenticate() {
     return _hostApi.canAuthenticate();
   }

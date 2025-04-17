@@ -6,8 +6,7 @@ import 'package:pigeon/pigeon.dart';
 @ConfigurePigeon(PigeonOptions(
   dartOut: 'lib/gen/locker_api.gen.dart',
   swiftOut: 'ios/flutter_locker/Sources/flutter_locker/FlutterLocker.swift',
-  kotlinOut:
-      'android/src/main/kotlin/com/infinum/flutter_locker/FlutterLocker.kt',
+  kotlinOut: 'android/src/main/kotlin/com/infinum/flutter_locker/FlutterLocker.kt',
   kotlinOptions: KotlinOptions(
     package: 'com.infinum.flutter_locker',
   ),
@@ -54,6 +53,9 @@ class IOsPrompt {
 
 @HostApi()
 abstract class FlutterLockerHostApi {
+  @async
+  bool supportsBiometricAuthentication();
+
   @async
   bool canAuthenticate();
 
