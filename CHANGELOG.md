@@ -1,3 +1,9 @@
+## 2.2.0
+
+- Added a `supportsBiometricAuthentication` method to check if the device has any biometric authentication capabilities.
+
+- Fixed a potential race condition on iOS where the `save` method returned a result before the save callback was invoked, which could cause a missing key error when reading immediately after saving
+
 ## 2.1.6
 
 - Swift Package Manager support
