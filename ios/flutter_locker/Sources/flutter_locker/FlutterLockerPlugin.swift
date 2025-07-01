@@ -5,16 +5,27 @@ import Locker
 extension FlutterError: Error {}
 
 public class FlutterLockerPlugin: NSObject, FlutterLockerHostApi, FlutterPlugin {
+
+    func supportsBiometricAuthentication(completion: @escaping (Result<Bool, Error>) -> Void) {
+        let supportedBiometrics = Locker.supportedBiometricsAuthentication
+        completion(.success(supportedBiometrics != BiometricsType.none))
+    }
+
     func canAuthenticate(completion: @escaping (Result<Bool, Error>) -> Void) {
-        let supportedBiometrics = Locker.configuredBiometricsAuthentication
-        completion(.success(supportedBiometrics != BiometricsType.none ? true : false))
+        let configuredBiometrics = Locker.configuredBiometricsAuthentication
+        completion(.success(configuredBiometrics != BiometricsType.none))
     }
     
     func save(request: SaveSecretRequest, completion: @escaping (Result<Void, Error>) -> Void) {
-        Locker.setSecret(request.secret, for: request.key)
         // This can never fail
         Locker.setShouldUseAuthenticationWithBiometrics(true, for: request.key)
-        completion(.success(Void()))
+        Locker.setSecret(request.secret, for: request.key) { error in
+            if let error {
+                completion(.failure(error))
+            } else {
+                completion(.success(()))
+            }
+        }
     }
     
     func retrieve(request: RetrieveSecretRequest, completion: @escaping (Result<String, Error>) -> Void) {

@@ -1,4 +1,4 @@
-# Flutter Locker🔒 
+# Flutter Locker🔒
 
 <p align="center">
     <img src="https://raw.githubusercontent.com/infinum/flutter-plugins-locker/master/Locker-github.jpg" width="700" max-width="50%" alt="Locker"/>
@@ -32,13 +32,18 @@ RetrieveSecretRequest(
   iOsPrompt: IOsPrompt(touchIdText: 'description'),
 )
 ```
- 
+
 ## Usage
+
+```dart
+FlutterLocker.supportsBiometricAuthentication();
+```
+Checks if the devices has biometric capabilities no matter if they are configured and turned on.
 
 ```dart
 FlutterLocker.canAuthenticate();
 ```
-Checks if the devices has biometric features.
+Checks if the devices has biometric capabilities that are configured and turned on.
 
 ```dart
 await FlutterLocker.save(SaveSecretRequest(
@@ -46,7 +51,7 @@ await FlutterLocker.save(SaveSecretRequest(
   secret: 'secret',
   androidPrompt: AndroidPrompt(title: 'Authenticate', cancelLabel: 'Cancel'),
 ));
-``` 
+```
 Saves the secret. On Android prompt is shown, while on iOS there is no need for the prompt when saving.
 
 ```dart
@@ -65,16 +70,16 @@ Deletes the secret.
 
 ## Exceptions
 
-For common exceptions, a `LockerException` is thrown. 
+For common exceptions, a `LockerException` is thrown.
 
-Use `LockerException.reason` to find out what went wrong: 
+Use `LockerException.reason` to find out what went wrong:
 
 - `secretNotFound` - Happens when you try to retrieve a secret that was never saved for that key
 - `authenticationCanceled` - User canceled the authentication prompt
 - `authenticationFailed` - User failed authentication, e.g. by too many wrong attempts
 
 For other exception, a `PlatformException` is thrown. You can use `PlatformException.message` to get more info.
- 
+
 ## Notes
 
 - iOS only: app will not show authentication dialog when saving (authentication will always succeed)

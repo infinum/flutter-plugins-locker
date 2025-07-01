@@ -23,6 +23,10 @@ class FlutterLockerPlugin : FlutterPlugin, ActivityAware, FlutterLockerHostApi {
     const val AUTHENTICATION_FAILED = "authenticationFailed"
   }
 
+  override fun supportsBiometricAuthentication(callback: (Result<Boolean>) -> Unit) {
+    callback(Result.success(goldfinger.hasBiometricHardware(authenticators)))
+  }
+
   override fun canAuthenticate(callback: (Result<Boolean>) -> Unit) {
     callback(Result.success(goldfinger.canAuthenticate(authenticators)))
   }
